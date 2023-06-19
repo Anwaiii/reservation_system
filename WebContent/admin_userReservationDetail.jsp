@@ -24,7 +24,7 @@
 </script>
 <script type="text/javascript">
 	function Logout() {
-		if (window.confirm("ログアウトしますか？")) {
+		if (window.confirm("ログアウトしますか?")) {
 			window.location.replace('Logout');
 			return false;
 		}
