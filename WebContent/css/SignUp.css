@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+h1 {
+	text-align: center;
+	color: #ff0080;
+	box-shadow: black;
+	border-style: solid;
+	border-color:  #ff0080 #ffffff #ff0080 #ffffff;
+	background-color:  #f9ceb3 ;
+	margin: 30px;
+	padding: 20px;
+	box-shadow: 0 20px 10px -20px inset, 0 -20px 10px -20px  inset;
+}
+
+caption {
+	font-weight: 700;
+}
+
+table {
+	text-align: center;
+	border-style: solid;
+	border-inline: solid #ff0080;   /* 左と右の線 */
+	border-block-color : #ff0080;	/* 上と下の線 */
+	border-collapse: collapse;
+	border-width:3px 3px;      /*  四辺が同じ太さにする */
+	margin: auto;
+	width : 25%;
+}
+
+.buttonall {
+	text-align: center;
+}
+
+.href {
+	padding-top: 30px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.message {
+  text-align: center;
+}
+
+.message .success{               /* 登録できた時のメッセージをデザインする */
+	text-align: center;
+	color : #0000ff;
+}
+
+.message .fail{		 /* 登録できなかった時のメッセージをデザインする */
+	text-align: center;
+	color : #ff0080;
+}

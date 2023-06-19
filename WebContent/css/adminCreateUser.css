@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+h1 {
+	text-align: center;
+	color: #ff0080;
+	box-shadow: black;
+	border-style: solid;
+	border-color:  #ff0080 #ffffff #ff0080 #ffffff;
+	background-color:  #f9ceb3 ;
+	margin: 30px;
+	padding: 20px;
+	box-shadow: 0 20px 10px -20px inset, 0 -20px 10px -20px  inset;
+}
+
+table {
+	text-align: center;
+	border-style: solid;
+	border-inline: solid #ff0080;   /* 左と右の線 */
+	border-block-color : #ff0080;	/* 上と下の線 */
+	border-collapse: collapse;
+	border-width:3px 3px;      /*  四辺が同じ太さにする */
+	margin: auto;
+	width : 25%;
+}
+
+tbody td{
+	height : 30px;
+}
+
+.button{
+	text-align:center;
+	width: 5%;
+	height: 30px;
+	background-color: #ff0080;
+	color: #ffffff;
+	font-weight: bold;
+	font-size : 15px;
+}
+
+div.buttonall {
+	text-align: center;
+}

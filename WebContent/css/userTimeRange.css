@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+h1 {
+	text-align: center;
+	color: #ff0080;
+	box-shadow: black;
+	border-style: solid;
+	border-color:  #ff0080 #ffffff #ff0080 #ffffff;
+	background-color:  #f9ceb3 ;
+	margin: 30px;
+	padding: 20px;
+	box-shadow: 0 20px 10px -20px inset, 0 -20px 10px -20px  inset;
+}
+
+table {
+	vertical-align:top;
+	border-style: solid;
+	border-inline: solid #bdaa20;   /* 左と右の線 */
+	border-block-color : #bdaa20;	/* 上と下の線 */
+	border-collapse: collapse;
+	border-width:3px 3px;      /*  四辺が同じ太さにする */
+	margin: auto;
+	width : 25%;
+}
+
+tbody td{
+
+	text-align: center;
+	width : 75px;
+	height : 40px;
+
+}
+
+.test{
+	display: block;
+	text-align : center;
+}
