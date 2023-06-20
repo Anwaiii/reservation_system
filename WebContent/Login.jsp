@@ -20,12 +20,20 @@
 	});
 </script>
 
+<script type="text/javascript">
+function signUpJSP(){
+		window.location = "SignUp.jsp"
+}
+</script>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システムログイン画面</title>
 
 </head>
 
 <body>
+<script defer src="js/click.js" type="text/javascript" charset="UTF-8"></script>
 	<%
 		request.setCharacterEncoding("UTF-8");
 		HttpSession sessionCheck = request.getSession(false);
@@ -44,7 +52,6 @@
 		}
 	%>
 
-	<script defer src="js/click.js" type="text/javascript" charset="UTF-8"></script>
 	<h1>予約システム</h1>
 
 	<%
@@ -80,7 +87,7 @@
 	<br>
 	<form action="LoginCon" method="post" id="loginFormID" autocomplete="off">
 		<table border=1>
-			<caption>♦このサービスをご利用になるにはログインしてください。♦</caption>
+
 
 			<tr>
 				<th colspan="2">会員ログイン</th>
@@ -89,12 +96,12 @@
 			<tr>
 				<td style="font-weight: bold;">ログインID</td>
 				<td><input type="text" name="userID" size="30"
-					class="validate[required]"></td>
+					class="validate[required],custom[onlyLetterNumber],[maxSize[16]]"></td>
 			</tr>
 			<tr>
 				<td style="font-weight: bold;">パスワード</td>
 				<td><input type="password" name="password" size="30"
-					class="validate[required]"></td>
+					class="validate[required],[maxSize[16]]"></td>
 			</tr>
 
 		</table>
@@ -102,7 +109,7 @@
 
 		<div class="buttonall">
 			<input type="submit" value="ログイン" class="button" id="loginButton">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<a href="SignUp.jsp"> 新規登録</a><br> <br>
+			<input type="button" value="新規登録" class="button" id="signUpButton" onclick="signUpJSP();"><br> <br>
 		</div>
 	</form>
 

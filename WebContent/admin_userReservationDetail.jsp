@@ -79,12 +79,21 @@
 
 			<tr>
 				<td>日付</td>
-				<td colspan="2"><input type="text" value="2023-06-13"></td>
+				<td colspan="2"><input type="date" value="2023-06-13"></td>
 
 			</tr>
 			<tr>
 				<td>時間帯</td>
-				<td colspan="2"><input type="text" value="10:00~11:00"></td>
+				<td colspan="2"><p class="select"><select name="buyAmount" id="buyAmount"
+						onchange='checkValue(this.value)'>
+							<option value="10">10:00~11:00</option>
+							<option value="11">11:00~12:00</option>
+							<option value="12">12:00~13:00</option>
+							<option value="13">13:00~14:00</option>
+							<option value="14">14:00~15:00</option>
+							<option value="15">15:00~16:00</option>
+							<option value="16">16:00~17:00</option>
+					</select></td>
 
 			</tr>
 			<tr>

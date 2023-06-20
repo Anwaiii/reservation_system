@@ -57,6 +57,31 @@ $(function(){
 	</ul>
 	<br><br><br><br>
 
+	<%
+		Integer signUpResult = (Integer) request.getAttribute("signUpResult");
+
+	%>
+	<div class="message">
+		&nbsp
+		<!-- このspaceキーは詳細/更新/削除の出力結果メッセージの位置を確保するために据えるものです %-->
+		<%
+			if (signUpResult != null) {
+				if (signUpResult == -1) {
+		%>
+		<span class="fail">✖パスワードが一致していません✖&nbsp</span>
+		<%
+			} else if (signUpResult == -2) {
+		%>
+		<span class="fail">✖ユーザIDが既に使用されています✖&nbsp</span>
+		<%
+			}else{
+		%>
+		<span class="fail">✖新規登録が失敗しました✖&nbsp</span>
+		<%
+			}}
+		%>
+
+	</div>
 
 <form action="reservationConfirmCon" method="post" id="reservationConfirm_formID">
 
@@ -109,7 +134,7 @@ $(function(){
 	</table>
 	<br><br>
 		<div class="buttonall">
-		<input type="submit" value="登　録" class="button" id="signUp">
+		<input type="submit" value="登　録" class="button" id="signUpButton">
 		</div>
 	</form>
 
