@@ -1,3 +1,4 @@
+<%@page import="model.reservationBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -39,6 +40,15 @@
 
 	<%
 		Integer signUpResult = (Integer) request.getAttribute("signUpResult");
+		reservationBean user = (reservationBean) request.getAttribute("user");
+		if(user == null){
+			user = new reservationBean();
+			user.setUserID("");
+			user.setUserName("");
+			user.setUserAddress("");
+			user.setUserPhoneNumber("");
+			user.setUserEmail("");
+		}
 
 	%>
 	<div class="message">
@@ -79,7 +89,7 @@
 			</tr>
 			<tr>
 				<td style="font-weight: bold;">ユーザID</td>
-				<td><input type="text" name="userID" size="30"
+				<td><input type="text" name="userID" size="30" value="<%= user.getUserID() %>"
 					class="validate[required],[maxSize[16]],custom[onlyLetterNumber]"></td>
 			</tr>
 			<tr>
@@ -96,26 +106,26 @@
 
 			<tr>
 				<td style="font-weight: bold;">氏名</td>
-				<td><input type="text" name="userName" size="30"
+				<td><input type="text" name="userName" size="30" value="<%= user.getUserName() %>"
 					class="validate[required],[maxSize[20]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">住所</td>
-				<td><input type="text" name="userAddress" size="100"
+				<td><input type="text" name="userAddress" size="100" value="<%= user.getUserAddress() %>"
 					class="validate[required],[maxSize[100]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">電話番号</td>
 				<td><input type="text" name="userPhoneNumber" size="11"
-					placeholder="例: 08912345678"
+					placeholder="例: 08912345678" value="<%= user.getUserPhoneNumber() %>"
 					class="validate[required],[minSize[11]],[maxSize[11]],custom[number]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">メール</td>
-				<td><input type="text" name="userEmail" size="50"
+				<td><input type="text" name="userEmail" size="50" value="<%= user.getUserEmail() %>"
 					class="validate[required],[maxSize[50]]"></td>
 			</tr>
 

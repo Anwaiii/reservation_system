@@ -1,7 +1,18 @@
+<%@page import="model.reservationBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" session="false"%>
+<% request.setCharacterEncoding("UTF-8");
+HttpSession session = request.getSession(false);
+if (session == null || session.getAttribute("userID") == null) {
+	response.sendRedirect("Login.jsp");
+	return;
+}
+	reservationBean userSession = (reservationBean)session.getAttribute("user");
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,11 +59,11 @@ $(function(){
 %>
 
 <ul>
-		<% /*
+		<%
 		System.out.println("sessionCheck");
-	 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
+	 	reservationBean user= (reservationBean)session.getAttribute("user");
 	 	%>
-		<li><a>Hello,xxxxxxxさん
+		<li><a>Hello,<%= userSession.getUserName() %>さん
 		</a>
 
 			<ul class="dropdown">

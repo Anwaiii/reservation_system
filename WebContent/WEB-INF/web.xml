@@ -19,4 +19,24 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SignUpCon</display-name>
+    <servlet-name>SignUpCon</servlet-name>
+    <servlet-class>controller.SignUpCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignUpCon</servlet-name>
+    <url-pattern>/SignUpCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoginCon</display-name>
+    <servlet-name>LoginCon</servlet-name>
+    <servlet-class>controller.LoginCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginCon</servlet-name>
+    <url-pattern>/LoginCon</url-pattern>
+  </servlet-mapping>
 </web-app>
