@@ -112,13 +112,13 @@
 
 			<tr>
 				<td style="font-weight: bold;">住所</td>
-				<td><input type="text" name="userAddress" size="100" value="<%= user.getUserAddress() %>"
+				<td><input type="text" name="userAddress" size="50" value="<%= user.getUserAddress() %>"
 					class="validate[required],[maxSize[100]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">電話番号</td>
-				<td><input type="text" name="userPhoneNumber" size="11"
+				<td><input type="text" name="userPhoneNumber" size="30"
 					placeholder="例: 08912345678" value="<%= user.getUserPhoneNumber() %>"
 					class="validate[required],[minSize[11]],[maxSize[11]],custom[number]"></td>
 			</tr>
