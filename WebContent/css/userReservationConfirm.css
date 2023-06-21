@@ -20,7 +20,7 @@ table {
 	border-collapse: collapse;
 	border-width:3px 3px;      /*  四辺が同じ太さにする */
 	margin: auto;
-	width : 25%;
+	width : 400px;
 }
 
 thead th{
@@ -40,7 +40,7 @@ tbody td{
 
 .button{
 	text-align:center;
-	width: 5%;
+	width: 100px;
 	height: 30px;
 	background-color: #f9ceb3;
 	color: #400040;
