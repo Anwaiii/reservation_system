@@ -39,4 +39,24 @@
     <servlet-name>LoginCon</servlet-name>
     <url-pattern>/LoginCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserCalendarCon</display-name>
+    <servlet-name>UserCalendarCon</servlet-name>
+    <servlet-class>controller.UserCalendarCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserCalendarCon</servlet-name>
+    <url-pattern>/UserCalendarCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserTimeRangeCon</display-name>
+    <servlet-name>UserTimeRangeCon</servlet-name>
+    <servlet-class>controller.UserTimeRangeCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserTimeRangeCon</servlet-name>
+    <url-pattern>/UserTimeRangeCon</url-pattern>
+  </servlet-mapping>
 </web-app>

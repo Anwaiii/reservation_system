@@ -33,6 +33,20 @@ if (session == null || session.getAttribute("userID") == null) {
 	});
 </script>
 <script type="text/javascript">
+function TimeRangeLink(date){
+	if(window.confirm("yes/no？")){
+		var form = document.forms[0];
+		var input = document.getElementById(date);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+		return true;
+	}else{
+		return false;
+	}
+		}
+</script>
+<script type="text/javascript">
 function Logout(){
 	if(window.confirm("ログアウトしますか？")){
 		window.location.replace('Logout');
@@ -42,22 +56,10 @@ function Logout(){
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム カレンダー画面</title>
-<script type="text/javascript">
-$(function(){
-    $(".test02").css("color","green")
-});
-</script>
+
 </head>
 <body>
-<%  Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
-		int currentYear = calendar.get(Calendar.YEAR);
-		int currentMonth = calendar.get(Calendar.MONTH);
-		int nextMonth = currentMonth + 1;
-		calendar.set(currentYear,currentMonth,1);      //カレンダーを当月の1日にセットする
-		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);  //	当月の1日は何曜日かを取得する
-		// System.out.println(calendar.get(Calendar.DATE) +" "+ dayOfWeek);
-%>
-
+<form action="UserTimeRangeCon" method="get"></form>
 <ul>
 		<%
 		System.out.println("sessionCheck");
@@ -71,13 +73,23 @@ $(function(){
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
+<%  Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
+		int currentYear = calendar.get(Calendar.YEAR);
+		int currentMonth = calendar.get(Calendar.MONTH);
+		int nextMonth = currentMonth + 1;
+		calendar.set(currentYear,currentMonth,1);      //カレンダーを当月の1日にセットする
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);  //	当月の1日は何曜日かを取得する
+		// System.out.println(calendar.get(Calendar.DATE) +" "+ dayOfWeek);
 
-	<%
 		calendar.set(currentYear,nextMonth,1);		//	カレンダーの日付を来月の1日にセットする
 		calendar.add(Calendar.DATE,-1);		//	カレンダーの日付を1日前に戻し、本月は何日があるかを求める
     	int maxDay = calendar.get(Calendar.DATE);	//	結果をmaxDayに代入する
     	// System.out.println(calendar.get(Calendar.MONTH)+" "+ maxDay);
+
+    	String month = String.format("%02d", currentMonth+1);
+    	 String date="";
     %>
+
 
 	 <table border="1">
 	 <caption style="font-size: 30px;">
@@ -96,6 +108,11 @@ $(function(){
         <th style="color : blue">土</th>
       </tr>
 
+ <% ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
+    	if(reservationResult != null){ %>
+
+
+
 <tbody>
 		<%
 		int dayCount = 1;
@@ -103,11 +120,13 @@ $(function(){
 		<tr>
 		<%
 		      for (int colWeek=1; colWeek<=7; colWeek++) {
+		    	  date = currentYear+"-"+month+"-" + String.format("%02d",dayCount);
 		    	  if (colWeek < dayOfWeek && rowWeek == 1) {
 		      %>
 		      <td></td>
 		      <%  }else if(dayCount <= maxDay){ %>
-		      		<td>
+		      		<td><input type="hidden" name="date"
+						value="<%= date %>" id="<%= dayCount %>">
 		      			<% if(colWeek == 1){ %>
 		      				<b style="color : red"><%= dayCount %></b><br><br>
 		      			<% }else if(colWeek == 7){ %>
@@ -115,10 +134,11 @@ $(function(){
 			  			<% }else{ %>
 			  				<b><%= dayCount %></b><br><br>
 			  			<% } %>
-					<a class="test" href="userTimeRange.jsp">予約</a>
-
-
-
+			  			<% if(reservationResult.get(dayCount-1).equals("予約")){ %>
+					<a class="test" href="javascript:void(0)" onclick="TimeRangeLink(<%= dayCount %>);">予約</a>
+					<% }else{ %>
+					<a class="test" href="javascript:void(0)">満席</a>
+					<% } %>
 
 
 		      		</td>
@@ -126,7 +146,7 @@ $(function(){
 
 		      %>
 		  </tr>
-		<% } %>
+		<% }} %>
 
 </tbody>
 

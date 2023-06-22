@@ -1,7 +1,18 @@
+<%@page import="model.reservationBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" session="false"%>
+<% request.setCharacterEncoding("UTF-8");
+HttpSession session = request.getSession(false);
+if (session == null || session.getAttribute("userID") == null) {
+	response.sendRedirect("Login.jsp");
+	return;
+}
+	reservationBean userSession = (reservationBean)session.getAttribute("user");
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,11 +62,10 @@ $(function(){
 
 
 <ul>
-		<% /*
-		System.out.println("sessionCheck");
-	 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
+		<%
+	 	reservationBean user= (reservationBean)session.getAttribute("user");
 	 	%>
-		<li><a>Hello,xxxxxxxさん
+			<li><a>Hello,<%= userSession.getUserName() %>さん
 		</a>
 
 			<ul class="dropdown">
@@ -74,29 +84,26 @@ $(function(){
 
 
 <tbody>
+<%  ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
+    	if(reservationResult != null){
+
+    		for(int i=10;i<=16;i++){ %>
+    			<tr>
+    			<% if(!reservationResult.contains(""+i)){
+    				%>
+
+    			<td><a href="userReservationConfirm.jsp">
+    			<%= i %> :00~<%= i+1 %>:00</a>（予約可能）</td>
+    			<% }else{ %>
+    			<td><%= i %>:00~<%= i+1 %>:00（予約済み）</td>
 
 
-	<tr>
-	<td><a href="userReservationConfirm.jsp">10:00~11:00</a>（予約済み）</td>
-	</tr>
-	<tr>
-	<td><a href="">11:00~12:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">12:00~13:00</a>（予約済み）</td>
-	</tr>
-	<tr>
-	<td><a href="">13:00~14:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">14:00~15:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">15:00~16:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">16:00~17:00</a>（予約済み）</td>
-	</tr>
+    			<% } %>
+    			</tr>
+    			 <% }} %>
+
+
+
 
 </tbody>
  </table>

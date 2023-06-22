@@ -35,21 +35,21 @@ function signUpJSP(){
 <body>
 <script defer src="js/click.js" type="text/javascript" charset="UTF-8"></script>
 	<%
-		request.setCharacterEncoding("UTF-8");
+		/* request.setCharacterEncoding("UTF-8");
 		HttpSession sessionCheck = request.getSession(false);
 		System.out.println(sessionCheck);
 		if (sessionCheck != null && sessionCheck.getAttribute("userID") != null
 				&& sessionCheck.getAttribute("role") != null) {
 			if ((Integer) sessionCheck.getAttribute("role") == 1) {
 				System.out.println("login.jsp:role1");
-				response.sendRedirect("UserListCon");
+				response.sendRedirect("UserCalendarCon");
 				return;
 			} else if ((Integer) sessionCheck.getAttribute("role") == 0) {
 				System.out.println("login.jsp:role0");
 				response.sendRedirect("Register.jsp");
 				return;
 			}
-		}
+		} */
 	%>
 
 	<h1>予約システム</h1>

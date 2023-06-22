@@ -72,7 +72,7 @@ public class LoginCon extends HttpServlet {
 			}else if(user.getRole() == 1) {
 				//	roleが1の場合は一般ユーザー
 			ServletContext app =this.getServletContext();
-			RequestDispatcher dispatcher =  app.getRequestDispatcher("/userCalendar.jsp");
+			RequestDispatcher dispatcher =  app.getRequestDispatcher("/UserCalendarCon");
 			dispatcher.forward(request, response);
 			}
 		}

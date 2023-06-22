@@ -68,9 +68,10 @@
 		時間帯を選んでください
 	 </caption>
 
-
 <tbody>
 
+<%  ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
+    	if(reservationResult != null){} %>
 
 	<tr>
 	<td><a href="admin_userReservationDetail.jsp">10:00~11:00</a>（予約済み）</td>
@@ -88,7 +89,7 @@
 	<td><a href="">14:00~15:00</a>（予約なし）</td>
 	</tr>
 	<tr>
-	<td><a href="">15:00~16:00</a>（予約なし）</td>
+	<td><a href="">15:00~16:00</a></td>
 	</tr>
 	<tr>
 	<td><a href="">16:00~17:00</a>（予約済み）</td>

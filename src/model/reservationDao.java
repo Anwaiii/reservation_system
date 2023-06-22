@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class reservationDao {
 	Connection conn = null;
@@ -165,5 +166,109 @@ public class reservationDao {
 			}
 		}
 		return null;
+	}
+
+	public ArrayList<String> printUserCalendar(int currentYear,int currentMonth,int maxDay) {
+
+		ResultSet rs=null;
+		String month = String.format("%02d", currentMonth+1); // currentMonth = 5, month = 6
+		ArrayList<String> reservationResult = new ArrayList<>();
+		int num=0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			for (int i = 1; i <= maxDay; i++) {
+				String date = currentYear+"-"+month+"-"+String.format("%02d",i)+"%";
+				String sql ="select count(booking_time) count from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
+
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, date);
+
+				rs=stmt.executeQuery();
+
+				while(rs.next()) {
+				 num = rs.getInt("count");
+				if(num < 7) {
+					reservationResult.add("予約");
+				}else {
+					reservationResult.add("満席");
+				}
+
+				}
+
+			}
+
+			//String sql ="select count(BOOKING_TIME) count from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
+				rs.close();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return reservationResult;
+	}
+
+	public ArrayList<String> printAvailableTime(String date) {
+		ResultSet rs=null;
+
+		ArrayList<String> reservationResult = new ArrayList<>();
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+
+				String sql ="select TO_CHAR(booking_time, 'HH24') unvailableTime"
+						+ " from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
+
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, date + "%");
+
+				rs=stmt.executeQuery();
+
+				while(rs.next()) {
+				reservationResult.add(rs.getString("unvailableTime"));
+			}
+
+			//String sql ="select count(BOOKING_TIME) count from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
+				rs.close();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return reservationResult;
 	}
 }
