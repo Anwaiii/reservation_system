@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -13,36 +12,34 @@ import javax.servlet.http.HttpServletResponse;
 import model.reservationDao;
 
 /**
- * Servlet implementation class userTimeRangeCon
+ * Servlet implementation class UserReservationConfirmCon
  */
-public class UserTimeRangeCon extends HttpServlet {
+public class UserReservationConfirmCon extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserTimeRangeCon() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UserReservationConfirmCon() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("UserTimeRangeCon:get()");
+		System.out.println("UserReservationConfirmCon:get()");
 
-		reservationDao reservationDao = new reservationDao();
-		String date = request.getParameter("date");
-		ArrayList<String> availableTime = new ArrayList<>();
+		String dateDetail = request.getParameter("reservationDetail");
 
-		availableTime = reservationDao.printAvailableTime(date);
+		String[] dateAndTime = dateDetail.split(" ");
 
-		request.setAttribute("date", date);
-    	request.setAttribute("reservationResult", availableTime);
+
+		request.setAttribute("dateAndTime", dateAndTime);
 		ServletContext app =this.getServletContext();
-		RequestDispatcher dispatcher =  app.getRequestDispatcher("/userTimeRange.jsp");
+		RequestDispatcher dispatcher =  app.getRequestDispatcher("/userReservationConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -50,10 +47,19 @@ public class UserTimeRangeCon extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		System.out.println("UserReservationConfirmCon:post()");
+
+		reservationDao reservationDao = new reservationDao();
+		String dateAndTime = request.getParameter("date")+" "+request.getParameter("time");
+		String userID = request.getParameter("userID");
+
+
+		int num = reservationDao.reserve(dateAndTime,userID);
+		request.setAttribute("message", num);
 
 		ServletContext app =this.getServletContext();
-		RequestDispatcher dispatcher =  app.getRequestDispatcher("/userTimeRange.jsp");
+		RequestDispatcher dispatcher =  app.getRequestDispatcher("/UserCalendarCon");
 		dispatcher.forward(request, response);
 	}
+
 }

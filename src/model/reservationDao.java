@@ -271,4 +271,50 @@ public class reservationDao {
 		}
 		return reservationResult;
 	}
+
+	public int reserve(String dateAndTime,String userID) {
+		int num = 0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			System.out.println(dateAndTime);
+			String sql = "insert into time_table(booking_no,booking_time,user_id) "
+					+ "values (booking_no.nextval,TO_DATE(?, 'YYYY-MM-DD HH24'),?)";
+
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, dateAndTime);
+			stmt.setString(2, userID);
+
+
+			//	item_tableが更新できたとき、numは1になる。そして、stock_tableの更新が行われる
+			num = stmt.executeUpdate();
+
+			stmt.close();
+
+			conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return num;
+	}
 }

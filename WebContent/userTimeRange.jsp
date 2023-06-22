@@ -32,15 +32,19 @@ if (session == null || session.getAttribute("userID") == null) {
 		jQuery("#signUpFormID").validationEngine();
 	});
 </script>
+
 <script type="text/javascript">
-	function deleteConfirm() {
-		if (window.confirm('削除しますか？')) {
-			window.location = "Login.jsp"
-		} else {
-			return false;
+function reservationConfirmLink(date){
+
+		var form = document.forms[0];
+		var input = document.getElementById(date);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
 		}
-	}
 </script>
+
 <script type="text/javascript">
 function Logout(){
 	if(window.confirm("ログアウトしますか？")){
@@ -59,17 +63,18 @@ $(function(){
 </head>
 <body>
 <h1> 予約状況 </h1>
-
+<form action="UserReservationConfirmCon" method="get"></form>
 
 <ul>
 		<%
 	 	reservationBean user= (reservationBean)session.getAttribute("user");
+		String date = (String) request.getAttribute("date");
 	 	%>
 			<li><a>Hello,<%= userSession.getUserName() %>さん
 		</a>
 
 			<ul class="dropdown">
-				<li><a href="userCalendar.jsp">カレンダー</a></li>
+				<li><a href="UserCalendarCon">カレンダー</a></li>
 				<li><a href="userAllReservation.jsp">全予約状況</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
@@ -79,21 +84,23 @@ $(function(){
 
 	 <table border="1">
 	 <caption>
-		時間帯を選んでください
+		<%=date %>の時間帯を選んでください
 	 </caption>
 
 
 <tbody>
 <%  ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
-    	if(reservationResult != null){
+
+    	if(reservationResult != null && date != null){
 
     		for(int i=10;i<=16;i++){ %>
     			<tr>
     			<% if(!reservationResult.contains(""+i)){
     				%>
 
-    			<td><a href="userReservationConfirm.jsp">
-    			<%= i %> :00~<%= i+1 %>:00</a>（予約可能）</td>
+    			<td><input type="hidden" name="reservationDetail" value="<%= date+" "+i%>" id="<%=i%>">
+    			<a href="javascript:void(0)" onclick="reservationConfirmLink(<%=i%>);">
+    			<%= i %>:00~<%= i+1 %>:00</a>（予約可能）</td>
     			<% }else{ %>
     			<td><%= i %>:00~<%= i+1 %>:00（予約済み）</td>
 

@@ -59,7 +59,7 @@ $(function(){
 		</a>
 
 			<ul class="dropdown">
-				<li><a href="userCalendar.jsp">カレンダー画面</a></li>
+				<li><a href="UserCalendarCon">カレンダー画面</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>

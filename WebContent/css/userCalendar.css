@@ -21,7 +21,7 @@ table {
 	border-collapse: collapse;
 	border-width:3px 3px;      /*  四辺が同じ太さにする */
 	margin: auto;
-	width : 50%;
+	width : 1000px;
 }
 
 tbody td{
@@ -36,4 +36,18 @@ tbody td{
 .test{
 	display: block;
 	text-align : center;
+}
+
+.message {
+  text-align: center;
+}
+
+.message .success{               /* 登録できた時のメッセージをデザインする */
+	text-align: center;
+	color : #0000ff;
+}
+
+.message .fail{		 /* 登録できなかった時のメッセージをデザインする */
+	text-align: center;
+	color : #ff0080;
 }

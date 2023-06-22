@@ -59,4 +59,14 @@
     <servlet-name>UserTimeRangeCon</servlet-name>
     <url-pattern>/UserTimeRangeCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserReservationConfirmCon</display-name>
+    <servlet-name>UserReservationConfirmCon</servlet-name>
+    <servlet-class>controller.UserReservationConfirmCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserReservationConfirmCon</servlet-name>
+    <url-pattern>/UserReservationConfirmCon</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -9,7 +9,7 @@ if (session == null || session.getAttribute("userID") == null) {
 	response.sendRedirect("Login.jsp");
 	return;
 }
-	reservationBean userSession = (reservationBean)session.getAttribute("user");
+	reservationBean user = (reservationBean)session.getAttribute("user");
 
 
 %>
@@ -34,16 +34,13 @@ if (session == null || session.getAttribute("userID") == null) {
 </script>
 <script type="text/javascript">
 function TimeRangeLink(date){
-	if(window.confirm("yes/no？")){
+
 		var form = document.forms[0];
 		var input = document.getElementById(date);
 		form.appendChild(input);
 		document.body.appendChild(form);
 		form.submit();
-		return true;
-	}else{
-		return false;
-	}
+
 		}
 </script>
 <script type="text/javascript">
@@ -60,12 +57,8 @@ function Logout(){
 </head>
 <body>
 <form action="UserTimeRangeCon" method="get"></form>
-<ul>
-		<%
-		System.out.println("sessionCheck");
-	 	reservationBean user= (reservationBean)session.getAttribute("user");
-	 	%>
-		<li><a>Hello,<%= userSession.getUserName() %>さん
+	<ul>
+		<li><a>Hello,<%= user.getUserName() %>さん
 		</a>
 
 			<ul class="dropdown">
@@ -73,6 +66,29 @@ function Logout(){
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
+
+	<%
+
+		Integer message = (Integer) request.getAttribute("message");
+	%>
+	<div class="message">
+		&nbsp
+		<!-- このspaceキーは詳細/更新/削除の出力結果メッセージの位置を確保するために据えるものです %-->
+
+		<%
+			if (message != null) {
+				if (message == 1) {
+		%>
+		<span class="success">予約できました。&nbsp</span>
+		<%
+			}else{
+		%>
+		<span class="fail">予約失敗しました。&nbsp</span>
+		<% }} %>
+
+
+	</div>
+
 <%  Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
 		int currentYear = calendar.get(Calendar.YEAR);
 		int currentMonth = calendar.get(Calendar.MONTH);
@@ -90,7 +106,7 @@ function Logout(){
     	 String date="";
     %>
 
-
+	<br><br><br><br>
 	 <table border="1">
 	 <caption style="font-size: 30px;">
 		<a href="" style="float:left">＜</a>
