@@ -1,7 +1,18 @@
+<%@page import="model.reservationBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" session="false"%>
+<% request.setCharacterEncoding("UTF-8");
+HttpSession session = request.getSession(false);
+if (session == null || session.getAttribute("userID") == null ||  (Integer)session.getAttribute("role") != 0) {
+	response.sendRedirect("Login.jsp");
+	return;
+}
+	reservationBean user = (reservationBean)session.getAttribute("user");
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,10 +59,10 @@
 				System.out.println("sessionCheck");
 			 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
 		%>
-		<li><a>Hello,xxxxxxxさん </a>
+		<li><a>Hello,<%= user.getUserName() %>さん</a>
 
 			<ul class="dropdown">
-				<li><a href="adminCalendar.jsp">カレンダー画面</a></li>
+				<li><a href="AdminCalendarCon">カレンダー</a></li>
 				<li><a href="adminCreateUser.jsp">ユーザー追加画面</a></li>
 				<li><a href="adminUpdateUser.jsp">ユーザー更新画面</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>

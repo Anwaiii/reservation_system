@@ -66,7 +66,7 @@ public class LoginCon extends HttpServlet {
 			if(user.getRole() == 0) {
 				//	roleが0の場合は管理者
 			ServletContext app =this.getServletContext();
-			RequestDispatcher dispatcher =  app.getRequestDispatcher("adminCalendarCon");
+			RequestDispatcher dispatcher =  app.getRequestDispatcher("/AdminCalendarCon");
 			dispatcher.forward(request, response);
 
 			}else if(user.getRole() == 1) {

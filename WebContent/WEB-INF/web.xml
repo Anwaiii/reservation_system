@@ -79,4 +79,24 @@
     <servlet-name>UserAllReservationCon</servlet-name>
     <url-pattern>/UserAllReservationCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminCalendarCon</display-name>
+    <servlet-name>AdminCalendarCon</servlet-name>
+    <servlet-class>controller.AdminCalendarCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminCalendarCon</servlet-name>
+    <url-pattern>/AdminCalendarCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminTimeRangeCon</display-name>
+    <servlet-name>AdminTimeRangeCon</servlet-name>
+    <servlet-class>controller.AdminTimeRangeCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminTimeRangeCon</servlet-name>
+    <url-pattern>/AdminTimeRangeCon</url-pattern>
+  </servlet-mapping>
 </web-app>

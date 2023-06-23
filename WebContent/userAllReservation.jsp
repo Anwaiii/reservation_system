@@ -32,8 +32,17 @@
 		jQuery("#signUpFormID").validationEngine();
 	});
 </script>
+
 <script type="text/javascript">
-	function DeleteLink(date) {
+	function updateLink() {
+		if (window.confirm("予約を変更しますか？")) {
+			window.location = "UserCalendarCon";
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	function deleteLink(date) {
 		if (window.confirm("この予約を取り消しますか？")) {
 			var form = document.forms[1];
 			var input = document.getElementById(date);
@@ -114,9 +123,9 @@
 					id="<%=reservationResult.get(i)%>"
 					value="<%=reservationResult.get(i)%>"> <span
 					style="font-weight: 900;"><%=reservationResult.get(i)%>時&nbsp&nbsp&nbsp&nbsp</span> <a
-					href="javascript:void(0)" onclick="">変更</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="javascript:void(0)" onclick="updateLink();">変更</a>&nbsp&nbsp&nbsp&nbsp <a
 					href="javascript:void(0)"
-					onclick="DeleteLink('<%=reservationResult.get(i)%>');">取消</a></td>
+					onclick="deleteLink('<%=reservationResult.get(i)%>');">取消</a></td>
 			</tr>
 
 

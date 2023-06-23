@@ -20,23 +20,18 @@ table {
 	border-collapse: collapse;
 	border-width:3px 3px;      /*  四辺が同じ太さにする */
 	margin: auto;
-	width : 25%;
+	width : 500px;
 }
 
 tbody td{
-	height : 30px;
-}
 
-.buttonall .button{
-	text-align:center;
-	width: 5%;
-	height: 30px;
-	background-color: #ff0080;
-	color: #ffffff;
-	font-weight: bold;
-	font-size : 15px;
-}
-
-div.buttonall {
 	text-align: center;
+	width : 7500px;
+	height : 40px;
+
+}
+
+.test{
+	display: block;
+	text-align : center;
 }
