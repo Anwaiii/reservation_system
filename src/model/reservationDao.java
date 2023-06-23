@@ -424,7 +424,7 @@ public class reservationDao {
 						+ "like ?)";
 
 				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, date);
+				stmt.setString(1, date+"%");
 
 				rs=stmt.executeQuery();
 
