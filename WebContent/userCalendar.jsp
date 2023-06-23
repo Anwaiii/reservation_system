@@ -16,7 +16,8 @@ if (session == null || session.getAttribute("userID") == null) {
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/mouseHoverDropDownDesign.css">
+<link rel="stylesheet" type="text/css"
+	href="css/mouseHoverDropDownDesign.css">
 <link rel="stylesheet" type="text/css" href="css/userCalendar.css">
 <link rel="stylesheet" type="text/css"
 	href="css/validationEngine.jquery.css">
@@ -43,6 +44,18 @@ function TimeRangeLink(date){
 
 		}
 </script>
+
+<script type="text/javascript">
+function allReservation(){
+		var form = document.forms[1];
+		var input = document.getElementById("userAllReservationFormID");
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
+		}
+</script>
+
 <script type="text/javascript">
 function Logout(){
 	if(window.confirm("ログアウトしますか？")){
@@ -56,13 +69,15 @@ function Logout(){
 
 </head>
 <body>
-<form action="UserTimeRangeCon" method="get"></form>
+	<form action="UserTimeRangeCon" method="get"></form>
+	<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
+		value="<%= user.getUserID() %>"></form>
 	<ul>
 		<li><a>Hello,<%= user.getUserName() %>さん
 		</a>
 
 			<ul class="dropdown">
-				<li><a href="userAllReservation.jsp">全予約状況</a></li>
+				<li><a href="javascript:void(0)" onclick="allReservation();">全予約状況</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
@@ -89,84 +104,77 @@ function Logout(){
 
 	</div>
 
-<%  Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
+	<%  Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
 		int currentYear = calendar.get(Calendar.YEAR);
-		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentMonth = calendar.get(Calendar.MONTH);	// currentMonthは0からはじまる。
 		int nextMonth = currentMonth + 1;
 		calendar.set(currentYear,currentMonth,1);      //カレンダーを当月の1日にセットする
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);  //	当月の1日は何曜日かを取得する
-		// System.out.println(calendar.get(Calendar.DATE) +" "+ dayOfWeek);
+
 
 		calendar.set(currentYear,nextMonth,1);		//	カレンダーの日付を来月の1日にセットする
 		calendar.add(Calendar.DATE,-1);		//	カレンダーの日付を1日前に戻し、本月は何日があるかを求める
     	int maxDay = calendar.get(Calendar.DATE);	//	結果をmaxDayに代入する
-    	// System.out.println(calendar.get(Calendar.MONTH)+" "+ maxDay);
 
+    	// currentMonthは0からはじまり、表示の際には+1が必要
     	String month = String.format("%02d", currentMonth+1);
     	 String date="";
     %>
 
-	<br><br><br><br>
-	 <table border="1">
-	 <caption style="font-size: 30px;">
-		<a href="" style="float:left">＜</a>
-		<span style="color : red; font-weight: bold;"><%= currentYear %>年  <%= currentMonth + 1 %>月</span>
-	    <a href="" style="float:right">＞</a>
-	 </caption>
+	<br>
+	<br>
+	<br>
+	<br>
+	<table border="1">
+		<caption style="font-size: 30px;">
+			<a href="" style="float: left">＜</a> <span
+				style="color: red; font-weight: bold;"><%= currentYear %>年 <%= currentMonth + 1 %>月</span>
+			<a href="" style="float: right">＞</a>
+		</caption>
 
-      <tr>
-        <th style="color : red">日</th>
-        <th>月</th>
-        <th>火</th>
-        <th>水</th>
-        <th>木</th>
-        <th>金</th>
-        <th style="color : blue">土</th>
-      </tr>
+		<tr>
+			<th style="color: red">日</th>
+			<th>月</th>
+			<th>火</th>
+			<th>水</th>
+			<th>木</th>
+			<th>金</th>
+			<th style="color: blue">土</th>
+		</tr>
 
- <% ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
+		<% ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
     	if(reservationResult != null){ %>
 
 
 
-<tbody>
-		<%
+		<tbody>
+			<%
 		int dayCount = 1;
 		for (int rowWeek=1; rowWeek<=6; rowWeek++) { %>
-		<tr>
-		<%
+			<tr>
+				<%
 		      for (int colWeek=1; colWeek<=7; colWeek++) {
 		    	  date = currentYear+"-"+month+"-" + String.format("%02d",dayCount);
 		    	  if (colWeek < dayOfWeek && rowWeek == 1) {
 		      %>
-		      <td></td>
-		      <%  }else if(dayCount <= maxDay){ %>
-		      		<td><input type="hidden" name="date"
-						value="<%= date %>" id="<%= dayCount %>">
-		      			<% if(colWeek == 1){ %>
-		      				<b style="color : red"><%= dayCount %></b><br><br>
-		      			<% }else if(colWeek == 7){ %>
-			  				<b style="color : blue"><%= dayCount %></b><br><br>
-			  			<% }else{ %>
-			  				<b><%= dayCount %></b><br><br>
-			  			<% } %>
-			  			<% if(reservationResult.get(dayCount-1).equals("予約")){ %>
-					<a class="test" href="javascript:void(0)" onclick="TimeRangeLink(<%= dayCount %>);">予約</a>
-					<% }else{ %>
-					<a class="test" href="javascript:void(0)">満席</a>
-					<% } %>
-
-
-		      		</td>
-		      <% dayCount++;}}
+				<td></td>
+				<%  }else if(dayCount <= maxDay){ %>
+				<td><input type="hidden" name="date" value="<%= date %>"
+					id="<%= dayCount %>"> <% if(colWeek == 1){ %> <b
+					style="color: red"><%= dayCount %></b><br>
+				<br> <% }else if(colWeek == 7){ %> <b style="color: blue"><%= dayCount %></b><br>
+				<br> <% }else{ %> <b><%= dayCount %></b><br>
+				<br> <% } %> <% if(reservationResult.get(dayCount-1).equals("予約")){ %>
+					<a class="test" href="javascript:void(0)"
+					onclick="TimeRangeLink(<%= dayCount %>);">予約</a> <% }else{ %> <a
+					class="test" href="javascript:void(0)">満席</a> <% } %></td>
+				<% dayCount++;}}
 
 		      %>
-		  </tr>
-		<% }} %>
+			</tr>
+			<% }} %>
 
-</tbody>
-
-
+		</tbody>
 
 
 
@@ -176,7 +184,9 @@ function Logout(){
 
 
 
-    </table>
+
+
+	</table>
 
 
 

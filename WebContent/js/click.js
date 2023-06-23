@@ -1,6 +1,7 @@
 /**
  *
  */
+
 		let registerButton = document.getElementById("register");
 
 		registerButton.onclick = () => {

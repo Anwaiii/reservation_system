@@ -36,17 +36,3 @@ table {
 	display: flex;
 	justify-content: space-evenly;
 }
-
-.message {
-  text-align: center;
-}
-
-.message .success{               /* 登録できた時のメッセージをデザインする */
-	text-align: center;
-	color : #0000ff;
-}
-
-.message .fail{		 /* 登録できなかった時のメッセージをデザインする */
-	text-align: center;
-	color : #ff0080;
-}

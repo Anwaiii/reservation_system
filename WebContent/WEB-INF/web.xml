@@ -69,4 +69,14 @@
     <servlet-name>UserReservationConfirmCon</servlet-name>
     <url-pattern>/UserReservationConfirmCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserAllReservationCon</display-name>
+    <servlet-name>UserAllReservationCon</servlet-name>
+    <servlet-class>controller.UserAllReservationCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserAllReservationCon</servlet-name>
+    <url-pattern>/UserAllReservationCon</url-pattern>
+  </servlet-mapping>
 </web-app>

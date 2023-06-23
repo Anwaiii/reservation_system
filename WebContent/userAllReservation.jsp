@@ -1,11 +1,22 @@
 <%@page import="java.util.ArrayList"%>
+<%@page import="model.reservationBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" session="false"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	HttpSession session = request.getSession(false);
+	if (session == null || session.getAttribute("userID") == null) {
+		response.sendRedirect("Login.jsp");
+		return;
+	}
+	reservationBean user = (reservationBean) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/mouseHoverDropDownDesign.css">
+<link rel="stylesheet" type="text/css"
+	href="css/mouseHoverDropDownDesign.css">
 <link rel="stylesheet" type="text/css" href="css/userAllReservation.css">
 <link rel="stylesheet" type="text/css"
 	href="css/validationEngine.jquery.css">
@@ -22,74 +33,102 @@
 	});
 </script>
 <script type="text/javascript">
-	function deleteConfirm() {
-		if (window.confirm('削除しますか？')) {
-			window.location = "Login.jsp"
+	function DeleteLink(date) {
+		if (window.confirm("この予約を取り消しますか？")) {
+			var form = document.forms[1];
+			var input = document.getElementById(date);
+			form.appendChild(input);
+			document.body.appendChild(form);
+			form.submit();
 		} else {
 			return false;
 		}
 	}
 </script>
 <script type="text/javascript">
-function Logout(){
-	if(window.confirm("ログアウトしますか？")){
-		window.location.replace('Logout');
-		return false;
+	function Logout() {
+		if (window.confirm("ログアウトしますか？")) {
+			window.location.replace('Logout');
+			return false;
+		}
 	}
-}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム 全予約確認画面</title>
-<script type="text/javascript">
-$(function(){
-    $(".test02").css("color","green")
-});
-</script>
+
 </head>
 <body>
-<h1> 全予約状況 </h1>
+	<h1>全予約状況</h1>
+	<form action="" method="post"></form>
+	<form action="UserAllReservationCon" method="post">
+		<input type="hidden" name="userID" value="<%=user.getUserID()%>">
+	</form>
 
+	<ul>
 
-<ul>
-		<% /*
-		System.out.println("sessionCheck");
-	 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
-	 	%>
-		<li><a>Hello,xxxxxxxさん
+		<li><a>Hello,<%=user.getUserName()%>さん
 		</a>
+
 
 			<ul class="dropdown">
 				<li><a href="UserCalendarCon">カレンダー画面</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
-		<br><br><br><br>
+	<%
+		Integer message = (Integer) request.getAttribute("message");
+	%>
+	<div class="message">
+		&nbsp
+		<!-- このspaceキーは詳細/更新/削除の出力結果メッセージの位置を確保するために据えるものです %-->
+
+		<%
+			if (message != null) {
+				if (message == 1) {
+		%>
+		<span class="success">予約を取り消しました。&nbsp</span>
+		<%
+			} else {
+		%>
+		<span class="fail">取消が失敗しました。&nbsp</span>
+		<%
+			}
+			}
+		%>
 
 
-	 <table border="1">
-	 <caption style="font-size: 30px;">
+	</div>
+	<br>
+	<br>
 
-	 </caption>
+	<table border="1">
+		<caption style="font-size: 30px;"></caption>
+		<tbody>
+			<%
+				ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
+				if (reservationResult != null) {
+					for (int i = 0; i < reservationResult.size(); i++) {
+			%>
+			<tr>
+				<td><input type="hidden" name="reservationDate"
+					id="<%=reservationResult.get(i)%>"
+					value="<%=reservationResult.get(i)%>"> <span
+					style="font-weight: 900;"><%=reservationResult.get(i)%>時&nbsp&nbsp&nbsp&nbsp</span> <a
+					href="javascript:void(0)" onclick="">変更</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="javascript:void(0)"
+					onclick="DeleteLink('<%=reservationResult.get(i)%>');">取消</a></td>
+			</tr>
 
 
-<tbody>
-
-
-	<tr>
-	<td>2023-06-01   <a href="">変更</a>   <a href="">取消</a></td>
-	</tr>
-	<tr>
-	<td>2023-06-07    <a href="">変更</a>   <a href="">取消</a></td>
-	</tr>
-	<tr>
-	<td>2023-06-10    <a href="">変更</a>   <a href="">取消</a></td>
-	</tr>
-
-</tbody>
+			<%
+				}
+				}
+			%>
+		</tbody>
 
 
 
-    </table>
+	</table>
 
 
 

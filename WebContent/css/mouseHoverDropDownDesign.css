@@ -43,3 +43,17 @@ ul li:hover ul.dropdown {
 ul li ul.dropdown li {
 	display: block;
 }
+
+.message {
+  text-align: center;
+}
+
+.message .success{               /* 登録できた時のメッセージをデザインする */
+	text-align: center;
+	color : #0000ff;
+}
+
+.message .fail{		 /* 登録できなかった時のメッセージをデザインする */
+	text-align: center;
+	color : #ff0080;
+}

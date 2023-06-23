@@ -35,7 +35,6 @@ public class reservationDao {
 			stmt.setString(6, userEmail);
 
 
-			//	item_tableが更新できたとき、numは1になる。そして、stock_tableの更新が行われる
 			num = stmt.executeUpdate();
 
 			stmt.close();
@@ -83,7 +82,6 @@ public class reservationDao {
 
 			rs=stmt.executeQuery();
 
-			//	ItemBeanクラスのobjectを作り、返された結果をこのobjectのフィールドに代入する
 			while(rs.next()) {
 				id = rs.getString("user_id");
 			}
@@ -129,7 +127,6 @@ public class reservationDao {
 
 			rs=stmt.executeQuery();
 
-			//
 			while(rs.next()) {
 				userID_result = rs.getString("user_id");
 				userPassword_result = rs.getString("user_password");
@@ -144,8 +141,6 @@ public class reservationDao {
 					return reservationBean;
 				}
 			}
-
-
 
 			rs.close();
 		}catch(SQLException | ClassNotFoundException e) {
@@ -171,7 +166,9 @@ public class reservationDao {
 	public ArrayList<String> printUserCalendar(int currentYear,int currentMonth,int maxDay) {
 
 		ResultSet rs=null;
-		String month = String.format("%02d", currentMonth+1); // currentMonth = 5, month = 6
+
+		// currentMonthは0からはじまり、表示の際には+1が必要
+		String month = String.format("%02d", currentMonth+1);
 		ArrayList<String> reservationResult = new ArrayList<>();
 		int num=0;
 
@@ -182,6 +179,9 @@ public class reservationDao {
 
 			for (int i = 1; i <= maxDay; i++) {
 				String date = currentYear+"-"+month+"-"+String.format("%02d",i)+"%";
+
+
+				// TO_CHAR関数を使うことで、明示的にbooking_timeを日付型から文字列に変換するので、LIKEが使える。
 				String sql ="select count(booking_time) count from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
 
 				stmt = conn.prepareStatement(sql);
@@ -201,7 +201,6 @@ public class reservationDao {
 
 			}
 
-			//String sql ="select count(BOOKING_TIME) count from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
 				rs.close();
 
 		}catch(SQLException | ClassNotFoundException e) {
@@ -235,7 +234,8 @@ public class reservationDao {
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
 			conn.setAutoCommit(false);
 
-
+				// TO_CHAR関数を使うことで、明示的に日付型から文字列に変換するので、LIKEが使える。
+			 	// selectのbooking_timeを好きな書式で必要な部分だけ取り出せる。ここはHourだけ取り出している。
 				String sql ="select TO_CHAR(booking_time, 'HH24') unvailableTime"
 						+ " from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD') LIKE ?";
 
@@ -289,8 +289,95 @@ public class reservationDao {
 			stmt.setString(1, dateAndTime);
 			stmt.setString(2, userID);
 
+			num = stmt.executeUpdate();
 
-			//	item_tableが更新できたとき、numは1になる。そして、stock_tableの更新が行われる
+			stmt.close();
+
+			conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return num;
+	}
+
+	public ArrayList<String> printUserAllReservation(String userID) {
+
+		ResultSet rs=null;
+
+		ArrayList<String> reservationResult = new ArrayList<>();
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+
+				// TO_CHAR関数を使うことで、明示的にbooking_timeを日付型から文字列に変換するので、LIKEが使える。
+				String sql ="select to_char(booking_time,'YYYY-MM-DD HH24') d from time_table where user_id = ? "
+						+ " order by booking_time";
+
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userID);
+
+				rs=stmt.executeQuery();
+
+				while(rs.next()) {
+					reservationResult.add(rs.getString("d"));
+				}
+
+				rs.close();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return reservationResult;
+	}
+
+	public int cancelReservation(String date) {
+		int num = 0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql = "delete time_table where to_char(booking_time, 'YYYY-MM-DD HH24') like ?";
+
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, date +"%");
+
 			num = stmt.executeUpdate();
 
 			stmt.close();

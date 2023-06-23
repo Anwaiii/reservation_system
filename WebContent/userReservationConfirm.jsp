@@ -50,17 +50,24 @@ reservationBean user= (reservationBean)session.getAttribute("user");
 		}
 	}
 </script>
+
+<script type="text/javascript">
+function allReservation(){
+		var form = document.forms[0];
+		var input = document.getElementById("userAllReservationFormID");
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+		}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム 予約確定</title>
-<script type="text/javascript">
-	$(function() {
-		$(".test02").css("color", "green")
-	});
-</script>
+
 </head>
 <body>
 	<h1>予約確定</h1>
-
+	<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
+		value="<%= user.getUserID() %>"></form>
 
 	<ul>
 
@@ -68,7 +75,7 @@ reservationBean user= (reservationBean)session.getAttribute("user");
 
 			<ul class="dropdown">
 				<li><a href="UserCalendarCon">カレンダー</a></li>
-				<li><a href="userAllReservation.jsp">全予約状況</a></li>
+				<li><a href="javascript:void(0)" onclick="allReservation();">全予約状況</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>

@@ -37,7 +37,7 @@ public class UserCalendarCon extends HttpServlet {
 		reservationDao reservationDao = new reservationDao();
 
 		Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
-		int currentYear = calendar.get(Calendar.YEAR);
+		int currentYear = calendar.get(Calendar.YEAR);	// currentMonthは0からはじまる。
 		int currentMonth = calendar.get(Calendar.MONTH);
 		int nextMonth = currentMonth + 1;
 		calendar.set(currentYear,currentMonth,1);      //カレンダーを当月の1日にセットする

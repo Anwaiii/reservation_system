@@ -9,7 +9,7 @@ if (session == null || session.getAttribute("userID") == null) {
 	response.sendRedirect("Login.jsp");
 	return;
 }
-	reservationBean userSession = (reservationBean)session.getAttribute("user");
+reservationBean user= (reservationBean)session.getAttribute("user");
 
 
 %>
@@ -46,6 +46,17 @@ function reservationConfirmLink(date){
 </script>
 
 <script type="text/javascript">
+function allReservation(){
+		var form = document.forms[1];
+		var input = document.getElementById("userAllReservationFormID");
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
+		}
+</script>
+
+<script type="text/javascript">
 function Logout(){
 	if(window.confirm("ログアウトしますか？")){
 		window.location.replace('Logout');
@@ -55,27 +66,23 @@ function Logout(){
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム 時間帯</title>
-<script type="text/javascript">
-$(function(){
-    $(".test02").css("color","green")
-});
-</script>
+
 </head>
 <body>
 <h1> 予約状況 </h1>
 <form action="UserReservationConfirmCon" method="get"></form>
-
+<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
+		value="<%= user.getUserID() %>"></form>
 <ul>
 		<%
-	 	reservationBean user= (reservationBean)session.getAttribute("user");
 		String date = (String) request.getAttribute("date");
 	 	%>
-			<li><a>Hello,<%= userSession.getUserName() %>さん
+			<li><a>Hello,<%= user.getUserName() %>さん
 		</a>
 
 			<ul class="dropdown">
 				<li><a href="UserCalendarCon">カレンダー</a></li>
-				<li><a href="userAllReservation.jsp">全予約状況</a></li>
+				<li><a href="javascript:void(0)" onclick="allReservation();">全予約状況</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
