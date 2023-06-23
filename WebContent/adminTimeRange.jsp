@@ -33,6 +33,19 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 		jQuery("#adminUpdateUser_formID").validationEngine();
 	});
 </script>
+
+<script type="text/javascript">
+function reservationDetailLink(date){
+
+		var form = document.forms[0];
+		var input = document.getElementById(date);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
+		}
+</script>
+
 <script type="text/javascript">
 	function Logout() {
 		if (window.confirm("ログアウトしますか？")) {
@@ -51,13 +64,11 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 </head>
 <body>
 	<h1>時間帯(管理者)</h1>
-
+<form action="Admin_userReservationDetailCon" method="get"></form>
 
 	<ul>
 		<%
-			/*
-				System.out.println("sessionCheck");
-			 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
+		String date = (String) request.getAttribute("date");
 		%>
 		<li><a>Hello,<%= user.getUserName() %>さん </a>
 
@@ -76,35 +87,38 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 
  <table border="1">
 	 <caption>
-		時間帯を選んでください
+		<%= date %>の時間帯を選んでください
 	 </caption>
 
 <tbody>
-
 <%  ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
-    	if(reservationResult != null){} %>
 
-	<tr>
-	<td><a href="admin_userReservationDetail.jsp">10:00~11:00</a>（予約済み）</td>
-	</tr>
-	<tr>
-	<td><a href="">11:00~12:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">12:00~13:00</a>（予約済み）</td>
-	</tr>
-	<tr>
-	<td><a href="">13:00~14:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">14:00~15:00</a>（予約なし）</td>
-	</tr>
-	<tr>
-	<td><a href="">15:00~16:00</a></td>
-	</tr>
-	<tr>
-	<td><a href="">16:00~17:00</a>（予約済み）</td>
-	</tr>
+
+    	if(reservationResult != null && date != null){
+
+    		for(int i=10;i<=16;i++){ %>
+    			<tr>
+    			<%
+    			// 10時~16時の中で予約が入っている時間帯を確認できる。リンクをクリックできる。
+    			if(reservationResult.contains(""+i)){
+    				%>
+
+    			<td><input type="hidden" name="reservationDetail" value="<%= date+" "+i%>" id="<%=i%>">
+    			<a href="javascript:void(0)" onclick="reservationDetailLink(<%=i%>);">
+    			<%= i %>:00~<%= i+1 %>:00</a>（予約詳細）
+    			</td>
+
+    			<% //予約が入っていないは時間帯を確認できない。リンクもクリックできない。
+    			}else{ %>
+    			<td><%= i %>:00~<%= i+1 %>:00（予約なし）</td>
+
+
+    			<% } %>
+    			</tr>
+    			 <% }} %>
+
+
+
 
 </tbody>
  </table>

@@ -73,6 +73,7 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 	<br>
 	<br>
 
+
 <form action="admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID">
 
 	<table border="1">
@@ -87,47 +88,58 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 		</thead>
 
 		<tbody>
-
+				<%
+				reservationBean userInfo = (reservationBean) request.getAttribute("userInfo");
+				String[] dateAndTime = (String[]) request.getAttribute("dateAndTime");
+					if(userInfo != null && dateAndTime != null){
+						String date = dateAndTime[0];
+						int time = Integer.parseInt(dateAndTime[1]);
+				%>
 			<tr>
 				<td>日付</td>
-				<td colspan="2"><input type="date" value="2023-06-13"></td>
+				<td colspan="2">&nbsp<input type="date" value="<%= date%>"></td>
 
 			</tr>
 			<tr>
 				<td>時間帯</td>
-				<td colspan="2"><p class="select"><select name="buyAmount" id="buyAmount"
-						onchange='checkValue(this.value)'>
-							<option value="10">10:00~11:00</option>
-							<option value="11">11:00~12:00</option>
-							<option value="12">12:00~13:00</option>
-							<option value="13">13:00~14:00</option>
-							<option value="14">14:00~15:00</option>
-							<option value="15">15:00~16:00</option>
-							<option value="16">16:00~17:00</option>
-					</select></td>
+				<td colspan="2"><p>&nbsp<select name="timeRange" id="timeRange">
+							<% for(int i = 10; i <=16 ; i++){ %>
+								<option value="<%=i%>" <% if(i == time){ %>selected<%} %>>
+								<%= i %>:00~<%= i+1 %>:00</option>
+
+							<% } %>
+							</select></p>
+				</td>
+
+
 
 			</tr>
 			<tr>
 				<td>名前</td>
-				<td colspan=2> wong</td>
+				<td colspan=2>&nbsp<%= userInfo.getUserName() %>
+				<input type="hidden" name="userID" id="userID"
+					value="<%= userInfo.getUserID() %>"></td>
 			</tr>
 			<tr>
 				<td>住所</td>
-				<td colspan="2"> xxxxxxxxxxxxxxxxx</td>
+				<td colspan=2>&nbsp<%= userInfo.getUserAddress() %></td>
 			</tr>
 			<tr>
 				<td>電話番号</td>
-				<td colspan="2"> 123-4567-8901</td>
+				<td colspan=2>&nbsp<%= userInfo.getUserPhoneNumber() %></td>
 			</tr>
 			<tr>
 				<td>メール</td>
-				<td colspan="2">xxxxx@gmail.com</td>
+				<td colspan=2>&nbsp<%= userInfo.getUserEmail() %></td>
 			</tr>
 
+		<%} %>
 		</tbody>
 	</table>
 	<br><br>
 		<div class="buttonall">
+
+		<%-- 例:update time_table set booking_time = '2023-06-30 10' where booking_time = '2023-06-01 10' --%>
 		<input type="submit" value="予約変更" class="button" id="alterButton">&nbsp&nbsp&nbsp&nbsp
 		<input type="button" value="予約削除" class="button" id="deleteButton">
 		</div>

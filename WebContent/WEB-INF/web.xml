@@ -99,4 +99,14 @@
     <servlet-name>AdminTimeRangeCon</servlet-name>
     <url-pattern>/AdminTimeRangeCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Admin_userReservationDetailCon</display-name>
+    <servlet-name>Admin_userReservationDetailCon</servlet-name>
+    <servlet-class>controller.Admin_userReservationDetailCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Admin_userReservationDetailCon</servlet-name>
+    <url-pattern>/Admin_userReservationDetailCon</url-pattern>
+  </servlet-mapping>
 </web-app>

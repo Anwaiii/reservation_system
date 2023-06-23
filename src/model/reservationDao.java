@@ -224,6 +224,7 @@ public class reservationDao {
 		return reservationResult;
 	}
 
+	// Hour値のリスト。Hourの値は10~16まで。
 	public ArrayList<String> printAvailableTime(String date) {
 		ResultSet rs=null;
 
@@ -404,4 +405,58 @@ public class reservationDao {
 
 		return num;
 	}
+
+	// 予約の詳細とユーザーの情報を返す
+	public reservationBean printReservationInfo(String date) {
+
+		ResultSet rs=null;
+		reservationBean userInfo = new reservationBean();
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+
+				// TO_CHAR関数を使うことで、明示的にbooking_timeを日付型から文字列に変換するので、LIKEが使える。
+				String sql ="select * from user_table where user_id = "
+						+ "(select user_id from time_table where to_char(booking_time, 'YYYY-MM-DD HH24') "
+						+ "like ?)";
+
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, date);
+
+				rs=stmt.executeQuery();
+
+				while(rs.next()) {
+					userInfo.setUserID(rs.getString("user_id"));
+					userInfo.setUserName(rs.getString("user_name"));
+					userInfo.setUserAddress(rs.getString("user_address"));
+					userInfo.setUserPhoneNumber(rs.getString("user_phonenumber"));
+					userInfo.setUserEmail(rs.getString("user_email"));
+				}
+
+				rs.close();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return userInfo;
+	}
+
 }
