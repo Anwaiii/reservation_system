@@ -507,6 +507,7 @@ public class reservationDao {
 		return reservationResult;
 	}
 
+	// 予約を取り消す
 	public int cancelReservation(String date) {
 		int num = 0;
 

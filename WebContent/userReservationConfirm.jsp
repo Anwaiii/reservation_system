@@ -42,6 +42,19 @@ reservationBean user= (reservationBean)session.getAttribute("user");
 	}
 		}
 </script>
+
+<script type="text/javascript">
+function TimeRangeLink(date){
+
+		var form = document.forms[0];
+		var input = document.getElementById(date);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
+		}
+</script>
+
 <script type="text/javascript">
 	function Logout() {
 		if (window.confirm("ログアウトしますか？")) {
@@ -65,6 +78,7 @@ function allReservation(){
 
 </head>
 <body>
+<form action="UserTimeRangeCon" method="get"></form>
 	<h1>予約確定</h1>
 	<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
 		value="<%= user.getUserID() %>"></form>
@@ -79,17 +93,20 @@ function allReservation(){
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
-	<br>
-	<br>
-	<br>
-	<br>
-<%
+
+	<%
 				String[] dateAndTime = (String[]) request.getAttribute("dateAndTime");
 					if(dateAndTime != null){
 						String date = dateAndTime[0];
 						int time = Integer.parseInt(dateAndTime[1]);
 
 				%>
+
+	<div class="href">
+	<a href="javascript:void(0)" onclick="TimeRangeLink('<%= date %>')">＜時間帯画面</a>
+	<a></a>
+</div><br><br>
+
 	<form action="UserReservationConfirmCon" method="post"
 		id="userReservationConfirmFormID" name="userReservationConfirmFormID">
 
@@ -106,10 +123,10 @@ function allReservation(){
 
 			<tbody>
 
-
 				<tr>
 					<td>日付</td>
-					<td colspan="2">&nbsp<input type="hidden" name="date" value="<%= date %>"><%= date %></td>
+					<td colspan="2">&nbsp<input type="hidden" name="date" value="<%= date %>"
+					 id="<%= date %>"><%= date %></td>
 
 				</tr>
 				<tr>

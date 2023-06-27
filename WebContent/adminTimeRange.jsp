@@ -56,11 +56,7 @@ function reservationDetailLink(date){
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム 管理者時間帯画面</title>
-<script type="text/javascript">
-	$(function() {
-		$(".test02").css("color", "green")
-	});
-</script>
+
 </head>
 <body>
 	<h1>時間帯(管理者)</h1>
@@ -79,8 +75,25 @@ function reservationDetailLink(date){
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
-	<br>
-	<br>
+	<%
+
+		Integer message = (Integer) request.getAttribute("message");
+	%>
+	<div class="message">
+		&nbsp
+		<!-- このspaceキーは詳細/更新/削除の出力結果メッセージの位置を確保するために据えるものです %-->
+
+		<%
+			if (message != null) {
+				if (message == 1) {
+		%>
+		<span class="success">予約を削除しました。&nbsp</span>
+		<%
+			}else{
+		%>
+		<span class="fail">削除が失敗しました。&nbsp</span>
+		<% }} %>
+		</div>
 	<br>
 	<br>
 

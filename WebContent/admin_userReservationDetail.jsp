@@ -34,6 +34,32 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 	});
 </script>
 <script type="text/javascript">
+function TimeRangeLink(date){
+
+		var form = document.forms[0];
+		var input = document.getElementById(date);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
+		}
+</script>
+
+<script type="text/javascript">
+function DeleteLink(dateTime){
+	if(window.confirm("この予約を削除しますか？")){
+		var form = document.forms[1];
+		var input = document.getElementById(dateTime);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+}else{
+	return false;
+}
+	}
+</script>
+
+<script type="text/javascript">
 	function Logout() {
 		if (window.confirm("ログアウトしますか?")) {
 			window.location.replace('Logout');
@@ -43,22 +69,21 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム 管理者_ユーザー予約詳細画面</title>
-<script type="text/javascript">
-	$(function() {
-		$(".test02").css("color", "green")
-	});
-</script>
+
 </head>
 <body>
+<form action="AdminTimeRangeCon" method="get"></form>
+<form method="get" action="DeleteCon"></form>
 	<h1>ユーザー予約詳細画面(管理者)</h1>
-
-
-	<ul>
 		<%
-			/*
-				System.out.println("sessionCheck");
-			 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
-		%>
+				reservationBean userInfo = (reservationBean) request.getAttribute("userInfo");
+				String[] dateAndTime = (String[]) request.getAttribute("dateAndTime");
+					if(userInfo != null && dateAndTime != null){
+						String date = dateAndTime[0];
+						int time = Integer.parseInt(dateAndTime[1]);
+						String dateTime = date + " " + time;
+				%>
+	<ul>
 		<li><a>Hello,<%= user.getUserName() %>さん</a>
 
 			<ul class="dropdown">
@@ -68,12 +93,13 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
-	<br>
-	<br>
-	<br>
-	<br>
 
+<div class="href">
+	<a href="javascript:void(0)" onclick="TimeRangeLink('<%=date %>')">＜時間帯画面</a>
+	<a></a>
+</div>
 
+	<br><br>
 <form action="admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID">
 
 	<table border="1">
@@ -88,16 +114,12 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 		</thead>
 
 		<tbody>
-				<%
-				reservationBean userInfo = (reservationBean) request.getAttribute("userInfo");
-				String[] dateAndTime = (String[]) request.getAttribute("dateAndTime");
-					if(userInfo != null && dateAndTime != null){
-						String date = dateAndTime[0];
-						int time = Integer.parseInt(dateAndTime[1]);
-				%>
+
 			<tr>
 				<td>日付</td>
-				<td colspan="2">&nbsp<input type="date" value="<%= date%>"></td>
+				<td colspan="2">&nbsp<input type="date" value="<%= date%>"><input type="hidden"
+				name="date" value="<%=date %>" id="<%=date %>"><input type='hidden' name="dateTime"
+				value="<%= dateTime %>" id="<%= dateTime %>"></td>
 
 			</tr>
 			<tr>
@@ -133,7 +155,7 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 				<td colspan=2>&nbsp<%= userInfo.getUserEmail() %></td>
 			</tr>
 
-		<%} %>
+
 		</tbody>
 	</table>
 	<br><br>
@@ -141,11 +163,12 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 
 		<%-- 例:update time_table set booking_time = '2023-06-30 10' where booking_time = '2023-06-01 10' --%>
 		<input type="submit" value="予約変更" class="button" id="alterButton">&nbsp&nbsp&nbsp&nbsp
-		<input type="button" value="予約削除" class="button" id="deleteButton">
+		<input type="button" value="予約削除" class="button" id="deleteButton"
+		 onclick="DeleteLink('<%= dateTime %>');">
 		</div>
 	</form>
 
-
+<%} %>
 
 </body>
 </html>

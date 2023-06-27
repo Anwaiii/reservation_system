@@ -34,7 +34,14 @@ public class UserTimeRangeCon extends HttpServlet {
 		System.out.println("UserTimeRangeCon:get()");
 
 		reservationDao reservationDao = new reservationDao();
+
+		// date = YYYY/MM/DD
 		String date = request.getParameter("date");
+
+		if(date == null) {
+			date = (String) request.getAttribute("date");
+			request.setAttribute("message", (Integer) request.getAttribute("message"));
+		}
 		ArrayList<String> availableTime = new ArrayList<>();
 
 		availableTime = reservationDao.printAvailableTime(date);

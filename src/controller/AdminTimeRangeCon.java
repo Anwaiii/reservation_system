@@ -37,6 +37,13 @@ public class AdminTimeRangeCon extends HttpServlet {
 
 		// date = YYYY/MM/DD
 		String date = request.getParameter("date");
+
+		if(date == null) {
+			date = (String) request.getAttribute("date");
+			request.setAttribute("message", (Integer) request.getAttribute("message"));
+		}
+
+
 		ArrayList<String> availableTime = new ArrayList<>();
 
 		// Hour値のリスト。Hourの値は10~16まで。

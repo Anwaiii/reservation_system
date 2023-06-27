@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import model.reservationDao;
 
@@ -32,8 +31,21 @@ public class DeleteCon extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("UTF-8");
+		System.out.println("DeleteCon:get()");
+
+		reservationDao reservationDao = new reservationDao();
+		String dateTime = request.getParameter("dateTime");
+		int num = 0;
+		num = reservationDao.cancelReservation(dateTime);
+		String date = dateTime.split(" ")[0];
+		System.out.println("test: "+date);
+
+		request.setAttribute("date", date);
+		request.setAttribute("message",num);
+		ServletContext app =this.getServletContext();
+		RequestDispatcher dispatcher =  app.getRequestDispatcher("/AdminTimeRangeCon");
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -41,13 +53,8 @@ public class DeleteCon extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		HttpSession sessionCheck = request.getSession(false);
-		if (sessionCheck == null || sessionCheck.getAttribute("userID") == null
-				|| (Integer)sessionCheck.getAttribute("role") != 0) {
-			response.sendRedirect("Login.jsp");
-			return;
-		}
-		System.out.println("DeleteCon:get()");
+
+		System.out.println("DeleteCon:post()");
 
 		reservationDao reservationDao = new reservationDao();
 		String userID = request.getParameter("userID");
