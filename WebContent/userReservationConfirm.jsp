@@ -109,27 +109,27 @@ function allReservation(){
 
 				<tr>
 					<td>日付</td>
-					<td colspan="2"><input type="hidden" name="date" value="<%= date %>"><%= date %></td>
+					<td colspan="2">&nbsp<input type="hidden" name="date" value="<%= date %>"><%= date %></td>
 
 				</tr>
 				<tr>
 					<td>時間帯</td>
-					<td colspan="2"><input type="hidden" name="time" value="<%= time %>">
-					<%= time %>:00~<%= time+1 %>:00</td>
+					<td colspan="2">&nbsp<input type="hidden" name="time"
+					value="<%= time %>"><%= time %>:00~<%= time+1 %>:00</td>
 				</tr>
 				<% } %>
 				<tr>
 					<td>名前</td>
-					<td colspan=2><input type="hidden" name="userID" value="<%=user.getUserID() %>">
-					<%= user.getUserName() %></td>
+					<td colspan=2>&nbsp<input type="hidden" name="userID"
+					value="<%=user.getUserID() %>"><%= user.getUserName() %></td>
 				</tr>
 				<tr>
 					<td>電話番号</td>
-					<td colspan="2"><%= user.getUserPhoneNumber() %></td>
+					<td colspan="2">&nbsp<%= user.getUserPhoneNumber() %></td>
 				</tr>
 				<tr>
 					<td>メール</td>
-					<td colspan="2"><%= user.getUserEmail() %></td>
+					<td colspan="2">&nbsp<%= user.getUserEmail() %></td>
 				</tr>
 
 			</tbody>

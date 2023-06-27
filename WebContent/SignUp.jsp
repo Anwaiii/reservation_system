@@ -90,43 +90,43 @@
 			</tr>
 			<tr>
 				<td style="font-weight: bold;">ユーザID</td>
-				<td><input type="text" name="userID" size="30" value="<%= user.getUserID() %>"
+				<td>&nbsp<input type="text" name="userID" size="30" value="<%= user.getUserID() %>"
 					class="validate[required],[maxSize[16]],custom[onlyLetterNumber]"></td>
 			</tr>
 			<tr>
 				<td style="font-weight: bold;">パスワード</td>
-				<td><input type="password" name="password" size="30"
+				<td>&nbsp<input type="password" name="password" size="30"
 					class="validate[required],[minSize[6],][maxSize[16]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">パスワード(再確認)</td>
-				<td><input type="password" name="passwordConfirm" size="30"
+				<td>&nbsp<input type="password" name="passwordConfirm" size="30"
 				class="validate[required]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">氏名</td>
-				<td><input type="text" name="userName" size="30" value="<%= user.getUserName() %>"
+				<td>&nbsp<input type="text" name="userName" size="30" value="<%= user.getUserName() %>"
 					class="validate[required],[maxSize[20]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">住所</td>
-				<td><input type="text" name="userAddress" size="50" value="<%= user.getUserAddress() %>"
+				<td>&nbsp<input type="text" name="userAddress" size="50" value="<%= user.getUserAddress() %>"
 					class="validate[required],[maxSize[100]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">電話番号</td>
-				<td><input type="text" name="userPhoneNumber" size="30"
+				<td>&nbsp<input type="text" name="userPhoneNumber" size="30"
 					placeholder="例: 08912345678" value="<%= user.getUserPhoneNumber() %>"
-					class="validate[required],[minSize[11]],[maxSize[11]],custom[number]"></td>
+					class="validate[required],[maxSize[11]],custom[number]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">メール</td>
-				<td><input type="text" name="userEmail" size="50" value="<%= user.getUserEmail() %>"
+				<td>&nbsp<input type="text" name="userEmail" size="50" value="<%= user.getUserEmail() %>"
 					class="validate[required],[maxSize[50]]"></td>
 			</tr>
 

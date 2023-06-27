@@ -17,14 +17,14 @@ caption {
 }
 
 table {
-	text-align: center;
+
 	border-style: solid;
 	border-inline: solid #ff0080;   /* 左と右の線 */
 	border-block-color : #ff0080;	/* 上と下の線 */
 	border-collapse: collapse;
 	border-width:3px 3px;      /*  四辺が同じ太さにする */
 	margin: auto;
-	width : 500px;
+	width : 400px;
 }
 
 .buttonall {

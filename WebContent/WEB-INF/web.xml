@@ -109,4 +109,34 @@
     <servlet-name>Admin_userReservationDetailCon</servlet-name>
     <url-pattern>/Admin_userReservationDetailCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminCreateUserCon</display-name>
+    <servlet-name>AdminCreateUserCon</servlet-name>
+    <servlet-class>controller.AdminCreateUserCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminCreateUserCon</servlet-name>
+    <url-pattern>/AdminCreateUserCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminUpdateUserCon</display-name>
+    <servlet-name>AdminUpdateUserCon</servlet-name>
+    <servlet-class>controller.AdminUpdateUserCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminUpdateUserCon</servlet-name>
+    <url-pattern>/AdminUpdateUserCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteCon</display-name>
+    <servlet-name>DeleteCon</servlet-name>
+    <servlet-class>controller.DeleteCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteCon</servlet-name>
+    <url-pattern>/DeleteCon</url-pattern>
+  </servlet-mapping>
 </web-app>

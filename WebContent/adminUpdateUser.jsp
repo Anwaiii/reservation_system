@@ -33,6 +33,20 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 		jQuery("#adminUpdateUser_formID").validationEngine();
 	});
 </script>
+
+<script type="text/javascript">
+function DeleteLink(userID){
+	if(window.confirm("このユーザーを削除しますか？")){
+		var form = document.forms[0];
+		var input = document.getElementById(userID);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+}else{
+	return false;
+}
+	}
+</script>
 <script type="text/javascript">
 	function Logout() {
 		if (window.confirm("ログアウトしますか？")) {
@@ -43,22 +57,13 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>予約システム ユーザー更新画面</title>
-<script type="text/javascript">
-	$(function() {
-		$(".test02").css("color", "green")
-	});
-</script>
 </head>
 <body>
+<form method="post" action="DeleteCon"></form>
+
 	<h1>ユーザ更新(管理者)</h1>
 
-
 	<ul>
-		<%
-			/*
-				System.out.println("sessionCheck");
-			 	UserBean user= (UserBean)sessionCheck.getAttribute("user"); */
-		%>
 		<li><a>Hello,<%= user.getUserName() %>さん </a>
 
 			<ul class="dropdown">
@@ -67,19 +72,38 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
-	<br>
-	<br>
-	<br>
-	<br>
+	<% String userID = (String) request.getAttribute("userID");
+	   if(userID == null){userID="";}%>
+	<div class="message">
+		&nbsp
+		<!-- このspaceキーは詳細/更新/削除の出力結果メッセージの位置を確保するために据えるものです %-->
+		<%
+			Integer message = (Integer) request.getAttribute("message");
+			if (message != null) {
+				if (message == 0) {
+		%>
+		<span class="fail">ユーザーIDが存在しません&nbsp</span>
+		<%
+			}else if(message == -1){ %>
+				<span class="fail">更新失敗しました&nbsp</span>
+		<%
+			}else if(message == 1){ %>
+				<span class="success">ユーザーを削除しました&nbsp</span>
+
+		<%	}else{ %>
+				<span class="success">ユーザー情報を更新しました&nbsp</span>
+			<%}}%>
+	</div>
+	<br><br>
 
 
-	<form action="adminUpdateUserCon" method="get"
+	<form action="AdminUpdateUserCon" method="get"
 		id="adminUpdateUserSearch_formID">
 
 		<div class="search" style="text-align:center;">
 
-			<span style="font-weight: bold;">ユーザID: </span><input type="text"
-				name="userID" size="30"
+			<span style="font-weight: bold;">ユーザーID: </span><input type="text"
+				name="userID" size="30" value="<%= userID %>"
 				class="validate[required],[maxSize[20]],custom[onlyLetterNumber]">
 			<input type="submit" value="検　索" class="button" id="searchButton">
 
@@ -88,8 +112,14 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 		<br>
 		<br>
 
-		<form action="adminUpdateUserCon" method="post"
-		id="adminUpdateUser_formID">
+
+		<% reservationBean userInfo = (reservationBean) request.getAttribute("userInfo");
+		   if(userInfo != null){
+		   System.out.println(userInfo.getUserID());%>
+
+
+		<form action="AdminUpdateUserCon" method="post"
+		id="adminUpdateUser_formID" onsubmit="return confirm('ユーザーの情報を更新しますか?');">
 
 
 		<table border="1">
@@ -99,25 +129,27 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 
 			<tr>
 				<td style="font-weight: bold;">名前</td>
-				<td><input type="text" name="userName" size="30"
+				<td>&nbsp<input type="hidden" name="userID" id="<%= userInfo.getUserID()%>"
+				value ="<%= userInfo.getUserID()%>"><input type="text"
+				name="userName" size="30" value="<%= userInfo.getUserName() %>"
 					class="validate[required],[maxSize[20]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">住所</td>
-				<td><input type="text" name="userAddress" size="30"
+				<td>&nbsp<input type="text" name="userAddress" size="50" value="<%= userInfo.getUserAddress() %>"
 					class="validate[required],[maxSize[100]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">電話番号</td>
-				<td><input type="text" name="userPhoneNumber" size="30"
-					class="validate[required],[maxSize[20]]"></td>
+				<td>&nbsp<input type="text" name="userPhoneNumber" size="30" value="<%= userInfo.getUserPhoneNumber() %>"
+					class="validate[required],[maxSize[11]],custom[number],[min[0]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">メール</td>
-				<td><input type="text" name="userEmail" size="30"
+				<td>&nbsp<input type="text" name="userEmail" size="30" value="<%= userInfo.getUserEmail() %>"
 					class="validate[required],[maxSize[50]]"></td>
 			</tr>
 
@@ -129,9 +161,12 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 
 		<div class="buttonall">
 			<input type="submit" value="更　新" class="button" id="updateButton">&nbsp&nbsp&nbsp&nbsp
-			<input type="button" value="削　除" class="button" id="deleteButton">
+			<input type="button" value="削　除" class="button" id="deleteButton"
+			onclick="DeleteLink(<%= userInfo.getUserID()%>);">
 		</div>
 	</form>
+
+	<%} %>
 
 
 

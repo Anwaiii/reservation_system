@@ -97,12 +97,12 @@ function signUpJSP(){
 			</tr>
 			<tr>
 				<td style="font-weight: bold;">ログインID</td>
-				<td><input type="text" name="userID" size="30"
+				<td>&nbsp<input type="text" name="userID" size="30"
 					class="validate[required],custom[onlyLetterNumber],[maxSize[16]]"></td>
 			</tr>
 			<tr>
 				<td style="font-weight: bold;">パスワード</td>
-				<td><input type="password" name="password" size="30"
+				<td>&nbsp<input type="password" name="password" size="30"
 					class="validate[required],[maxSize[16]]"></td>
 			</tr>
 

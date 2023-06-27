@@ -163,6 +163,148 @@ public class reservationDao {
 		return null;
 	}
 
+	public reservationBean getUserInfo(String userID) {
+		reservationBean userInfo = new reservationBean();
+		ResultSet rs=null;
+		String userID_result = "";
+		String userPassword_result = "";
+
+		try {
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql ="select * from user_table where user_id = ? ";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userID);
+
+			rs=stmt.executeQuery();
+
+			while(rs.next()) {
+					userInfo.setUserID(rs.getString("user_id"));
+					userInfo.setUserName(rs.getString("user_name"));
+					userInfo.setRole(rs.getInt("user_role"));
+					userInfo.setUserAddress(rs.getString("user_address"));
+					userInfo.setUserPhoneNumber(rs.getString("user_phonenumber"));
+					userInfo.setUserEmail(rs.getString("user_email"));
+					return userInfo;
+				}
+
+
+			rs.close();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public int updateUser(String userID,String userName,String userAddress,String userPhoneNumber,String userEmail) {
+
+		 // 更新失敗したとき、-1を返す
+		int num = -1;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql = "update user_table set user_name = ?,"
+					+ "user_address = ?,"
+					+ "user_phonenumber = ?,"
+					+ "user_email = ? where user_id= ?";
+
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1,userName);
+			stmt.setString(2,userAddress);
+			stmt.setString(3,userPhoneNumber);
+			stmt.setString(4,userEmail);
+			stmt.setString(5,userID);
+
+
+			//	item_tableが更新できたとき、numは1になる。そして、stock_tableの更新が行われる
+			num = stmt.executeUpdate();
+			stmt.close();
+
+			conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return num;
+	}
+
+	public int deleteUser(String userID) {
+		int num = 0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql = "delete from user_table where user_id = ? ";
+
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, userID);
+			num = stmt.executeUpdate();
+
+			stmt.close();
+
+			conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return num;
+	}
+
 	public ArrayList<String> printUserCalendar(int currentYear,int currentMonth,int maxDay) {
 
 		ResultSet rs=null;
