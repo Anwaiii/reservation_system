@@ -40,6 +40,7 @@ public class AdminTimeRangeCon extends HttpServlet {
 
 		if(date == null) {
 			date = (String) request.getAttribute("date");
+			System.out.println("test"+date);
 			request.setAttribute("message", (Integer) request.getAttribute("message"));
 		}
 
@@ -61,7 +62,19 @@ public class AdminTimeRangeCon extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		System.out.println("AdminTimeRangeCon:post()");
 
+		reservationDao reservationDao = new reservationDao();
+		String date = (String) request.getAttribute("date");
+		request.setAttribute("message", (Integer) request.getAttribute("message"));
+
+		ArrayList<String> availableTime = new ArrayList<>();
+
+		// Hour値のリスト。Hourの値は10~16まで。
+		availableTime = reservationDao.printAvailableTime(date);
+
+		request.setAttribute("date", date);
+    	request.setAttribute("reservationResult", availableTime);
 		ServletContext app =this.getServletContext();
 		RequestDispatcher dispatcher =  app.getRequestDispatcher("/adminTimeRange.jsp");
 		dispatcher.forward(request, response);

@@ -35,7 +35,7 @@ public class DeleteCon extends HttpServlet {
 		System.out.println("DeleteCon:get()");
 
 		reservationDao reservationDao = new reservationDao();
-		String dateTime = request.getParameter("dateTime");
+		String dateTime = request.getParameter("beforeDateTime");
 		int num = 0;
 		num = reservationDao.cancelReservation(dateTime);
 		String date = dateTime.split(" ")[0];

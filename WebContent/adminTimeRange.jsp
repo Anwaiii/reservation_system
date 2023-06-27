@@ -88,6 +88,12 @@ function reservationDetailLink(date){
 				if (message == 1) {
 		%>
 		<span class="success">予約を削除しました。&nbsp</span>
+
+		<% }else if(message == 2){ %>
+		<span class="success">予約を変更しました。&nbsp</span>
+
+		<% }else if(message == 0){ %>
+			<span class="fail">予約変更が失敗しました。&nbsp</span>
 		<%
 			}else{
 		%>

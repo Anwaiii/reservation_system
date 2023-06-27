@@ -52,8 +52,29 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		System.out.println("Admin_userReservationDetailCon:post()");
+
+		reservationDao reservationDao = new reservationDao();
+
+		// date = YYYY/MM/DD HH24
+		String oldDate = request.getParameter("beforeDateTime");
+		String date = request.getParameter("date");
+		String newTimeRange = request.getParameter("timeRange");
+		String newDate = date + " " + newTimeRange;
+		System.out.println("before:"+oldDate);
+		System.out.println("new:"+newDate);
+
+		int num = reservationDao.updateReservation(newDate, oldDate);
+		if(num == 1) {
+			num = 2;
+		}
+
+		request.setAttribute("date", oldDate.split(" ")[0]);
+		request.setAttribute("message", num);
+		ServletContext app =this.getServletContext();
+		RequestDispatcher dispatcher =  app.getRequestDispatcher("/AdminTimeRangeCon");
+		dispatcher.forward(request, response);
 	}
 
 }

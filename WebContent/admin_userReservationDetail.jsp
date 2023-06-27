@@ -100,7 +100,7 @@ function DeleteLink(dateTime){
 </div>
 
 	<br><br>
-<form action="admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID">
+<form action="Admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID">
 
 	<table border="1">
 		<caption></caption>
@@ -117,8 +117,8 @@ function DeleteLink(dateTime){
 
 			<tr>
 				<td>日付</td>
-				<td colspan="2">&nbsp<input type="date" value="<%= date%>"><input type="hidden"
-				name="date" value="<%=date %>" id="<%=date %>"><input type='hidden' name="dateTime"
+				<td colspan="2">&nbsp<input type="date" value="<%= date%>" name="date"><input type="hidden"
+				name="date" value="<%=date %>" id="<%=date %>"><input type='hidden' name="beforeDateTime"
 				value="<%= dateTime %>" id="<%= dateTime %>"></td>
 
 			</tr>

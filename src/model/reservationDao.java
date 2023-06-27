@@ -507,6 +507,50 @@ public class reservationDao {
 		return reservationResult;
 	}
 
+	// 予約を更新する
+	public int updateReservation(String newDate,String oldDate) {
+		int num = 0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql = "update time_table set booking_time = TO_DATE(?, 'YYYY-MM-DD HH24') "
+					+ " where to_char(booking_time, 'YYYY-MM-DD HH24') like ?";
+
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, newDate);
+			stmt.setString(2, oldDate +"%");
+
+			num = stmt.executeUpdate();
+
+			stmt.close();
+
+			conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return num;
+	}
+
 	// 予約を取り消す
 	public int cancelReservation(String date) {
 		int num = 0;
