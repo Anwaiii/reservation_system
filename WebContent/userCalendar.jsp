@@ -68,11 +68,8 @@ function newMonth(currentMonth){
 </script>
 
 <script type="text/javascript">
-function lastMonth(currentMonth){
+function lastMonth(){
 		var form = document.forms[3];
-		var input = document.getElementById(currentMonth);
-		form.appendChild(input);
-		document.body.appendChild(form);
 		form.submit();
 
 		}
@@ -184,7 +181,7 @@ function Logout(){
 	<table border="1">
 		<caption style="font-size: 30px;">
 			<% if(!(currentYear == yyyy && currentMonth < MM)){ %>
-			<a href="javascript:void(0)" style="float: left" onclick="lastMonth(<%=currentMonth%>);">＜</a>
+			<a href="javascript:void(0)" style="float: left" onclick="lastMonth();">＜</a>
 
 			<% } else{%>&nbsp&nbsp<%} %>
 			<span style="color: red; font-weight: bold;"><%= currentYear %>年 <%= currentMonth + 1 %>月</span>

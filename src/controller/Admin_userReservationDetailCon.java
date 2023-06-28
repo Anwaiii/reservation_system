@@ -65,6 +65,11 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 		System.out.println("before:"+oldDate);
 		System.out.println("new:"+newDate);
 
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH");
+//	    Date currentDay = formatter.format(date);
+//	    String currentsDay = formatter.format(day);
+//	    System.out.println("cur:"+currentDay);
+
 		int num = reservationDao.updateReservation(newDate, oldDate);
 		if(num == 1) {
 			num = 2;
