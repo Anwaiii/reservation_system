@@ -139,4 +139,24 @@
     <servlet-name>DeleteCon</servlet-name>
     <url-pattern>/DeleteCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NextMonthCon</display-name>
+    <servlet-name>NextMonthCon</servlet-name>
+    <servlet-class>controller.NextMonthCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NextMonthCon</servlet-name>
+    <url-pattern>/NextMonthCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LastMonthCon</display-name>
+    <servlet-name>LastMonthCon</servlet-name>
+    <servlet-class>controller.LastMonthCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LastMonthCon</servlet-name>
+    <url-pattern>/LastMonthCon</url-pattern>
+  </servlet-mapping>
 </web-app>

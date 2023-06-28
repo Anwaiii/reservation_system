@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.reservationBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -55,7 +56,27 @@ function allReservation(){
 
 		}
 </script>
+<script type="text/javascript">
+function newMonth(currentMonth){
+		var form = document.forms[2];
+		var input = document.getElementById(currentMonth);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
 
+		}
+</script>
+
+<script type="text/javascript">
+function lastMonth(currentMonth){
+		var form = document.forms[3];
+		var input = document.getElementById(currentMonth);
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+
+		}
+</script>
 <script type="text/javascript">
 function Logout(){
 	if(window.confirm("ログアウトしますか？")){
@@ -69,9 +90,28 @@ function Logout(){
 
 </head>
 <body>
+	<% Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
+
+
+	Integer currentYear = (Integer) request.getAttribute("currentYear");
+	Integer currentMonth = (Integer) request.getAttribute("currentMonth");
+
+	if(currentYear == null && currentMonth == null){
+		currentYear = calendar.get(Calendar.YEAR);
+		currentMonth = calendar.get(Calendar.MONTH);	// currentMonthは0からはじまる。
+	}
+
+	%>
+
 	<form action="UserTimeRangeCon" method="get"></form>
 	<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
 		value="<%= user.getUserID() %>"></form>
+	<form action="NextMonthCon" method="get"><input type="hidden" name="currentYear" value="<%=currentYear%>"
+	 id="<%=currentYear%>"></form>
+	 <form action="LastMonthCon" method="get">
+	 <input type="hidden" name="currentYear" value="<%=currentYear%>">
+	   <input type="hidden" name="currentMonth" value="<%=currentMonth%>">
+	 </form>
 	<ul>
 		<li><a>Hello,<%= user.getUserName() %>さん
 		</a>
@@ -104,13 +144,22 @@ function Logout(){
 
 	</div>
 
-	<%  Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
-		int currentYear = calendar.get(Calendar.YEAR);
-		int currentMonth = calendar.get(Calendar.MONTH);	// currentMonthは0からはじまる。
+	<%
+
 		int nextMonth = currentMonth + 1;
+
 		calendar.set(currentYear,currentMonth,1);      //カレンダーを当月の1日にセットする
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);  //	当月の1日は何曜日かを取得する
+		 SimpleDateFormat formatter = new SimpleDateFormat("dd");
+		    Date day = new Date();
+		    int dd = Integer.parseInt(formatter.format(day));
+		    SimpleDateFormat formatter2 = new SimpleDateFormat("MM");
+		    int MM = Integer.parseInt(formatter2.format(day));
+		    SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy");
+		    int yyyy = Integer.parseInt(formatter3.format(day));
 
+
+		 // ex:currentMonth = 5, MM = 6. currentMonth + 1 = MM
 
 		calendar.set(currentYear,nextMonth,1);		//	カレンダーの日付を来月の1日にセットする
 		calendar.add(Calendar.DATE,-1);		//	カレンダーの日付を1日前に戻し、本月は何日があるかを求める
@@ -119,6 +168,13 @@ function Logout(){
     	// currentMonthは0からはじまり、表示の際には+1が必要
     	String month = String.format("%02d", currentMonth+1);
     	 String date="";
+    	 calendar = Calendar.getInstance();
+
+    	 calendar.add(Calendar.DATE,90);
+    	 Calendar newDay = Calendar.getInstance();
+    	 newDay.set(currentYear, currentMonth,1);
+		 int diff = calendar.compareTo(newDay);
+
     %>
 
 	<br>
@@ -127,9 +183,17 @@ function Logout(){
 	<br>
 	<table border="1">
 		<caption style="font-size: 30px;">
-			<a href="" style="float: left">＜</a> <span
-				style="color: red; font-weight: bold;"><%= currentYear %>年 <%= currentMonth + 1 %>月</span>
-			<a href="" style="float: right">＞</a>
+			<% if(!(currentYear == yyyy && currentMonth < MM)){ %>
+			<a href="javascript:void(0)" style="float: left" onclick="lastMonth(<%=currentMonth%>);">＜</a>
+
+			<% } else{%>&nbsp&nbsp<%} %>
+			<span style="color: red; font-weight: bold;"><%= currentYear %>年 <%= currentMonth + 1 %>月</span>
+
+			<% if (diff > 0 ){ %>
+			<a href="javascript:void(0)" style="float: right" onclick="newMonth(<%=currentMonth%>);">
+			<input type="hidden" name="currentMonth" value="<%=currentMonth%>"
+			   id="<%=currentMonth %>">＞</a>
+			   <%} else{%>&nbsp&nbsp<%} %>
 		</caption>
 
 		<tr>
@@ -160,41 +224,35 @@ function Logout(){
 				<td></td>
 				<%  }else if(dayCount <= maxDay){ %>
 				<td><input type="hidden" name="date" value="<%= date %>"
-					id="<%= dayCount %>"> <% if(colWeek == 1){ %> <b
+					id="<%= dayCount %>">
+					 <% if(colWeek == 1){ %> <b
 					style="color: red"><%= dayCount %></b><br>
 				<br> <% }else if(colWeek == 7){ %> <b style="color: blue"><%= dayCount %></b><br>
 				<br> <% }else{ %> <b><%= dayCount %></b><br>
-				<br> <% } %> <% if(reservationResult.get(dayCount-1).equals("予約")){ %>
-					<a class="test" href="javascript:void(0)"
-					onclick="TimeRangeLink(<%= dayCount %>);">予約</a> <% }else{ %> <a
-					class="test" href="javascript:void(0)">満席</a> <% } %></td>
-				<% dayCount++;}}
+				<br> <% } %> <%
+				 if(currentYear == yyyy && currentMonth+1 == MM){
+					if(dayCount >= dd){
+					 	if(reservationResult.get(dayCount-1).equals("予約")){ %>
+						<a class="test" href="javascript:void(0)"
+						onclick="TimeRangeLink(<%= dayCount %>);">予約</a>
+						<% }else{ %> <a
+						class="test" href="javascript:void(0)">満席</a> <% }} %>
 
-		      %>
+				<% }else{
+					if(reservationResult.get(dayCount-1).equals("予約")){ %>
+					<a class="test" href="javascript:void(0)"
+						onclick="TimeRangeLink(<%= dayCount %>);">予約</a>
+						<% }else{ %> <a
+						class="test" href="javascript:void(0)">満席</a> <% }%></td>
+
+
+				<%}dayCount++;}}%>
 			</tr>
 			<% }} %>
 
 		</tbody>
 
-
-
-
-
-
-
-
-
-
-
 	</table>
-
-
-
-
-
-
-
-
 
 
 </body>

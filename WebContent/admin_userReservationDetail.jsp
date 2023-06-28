@@ -100,7 +100,8 @@ function DeleteLink(dateTime){
 </div>
 
 	<br><br>
-<form action="Admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID">
+<form action="Admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID"
+		onsubmit="return confirm('予約変更を確定しますか?');">
 
 	<table border="1">
 		<caption></caption>
