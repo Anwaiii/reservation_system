@@ -192,7 +192,7 @@ function Logout(){
 				<td></td>
 				<%  }else if(dayCount <= maxDay){ %>
 				<td><input type="hidden" name="date" value="<%= date %>"
-					id="<%= dayCount %>">
+					id="<%= date %>">
 					 <% if(colWeek == 1){ %> <b
 					style="color: red"><%= dayCount %></b><br>
 				<br> <% }else if(colWeek == 7){ %> <b style="color: blue"><%= dayCount %></b><br>
@@ -201,10 +201,10 @@ function Logout(){
 				 if(!(currentYear == yyyy && currentMonth+1 == MM && dayCount < dd)){
 					 %>
 					<a class="test" href="javascript:void(0)"
-					onclick="TimeRangeLink(<%= dayCount %>);">予約詳細</a><%}%></td>
+					onclick="TimeRangeLink('<%= date %>');">予約詳細</a><%}%>
 
 
-				<%dayCount++;}}}%>
+				<%dayCount++;}%></td><%}}%>
 			</tr>
 			<% } %>
 

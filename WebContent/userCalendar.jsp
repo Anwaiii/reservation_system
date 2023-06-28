@@ -224,7 +224,7 @@ function Logout(){
 				<td></td>
 				<%  }else if(dayCount <= maxDay){ %>
 				<td><input type="hidden" name="date" value="<%= date %>"
-					id="<%= dayCount %>">
+					id="<%= date %>">
 					 <% if(colWeek == 1){ %> <b
 					style="color: red"><%= dayCount %></b><br>
 				<br> <% }else if(colWeek == 7){ %> <b style="color: blue"><%= dayCount %></b><br>
@@ -234,14 +234,14 @@ function Logout(){
 					if(dayCount >= dd){
 					 	if(reservationResult.get(dayCount-1).equals("予約")){ %>
 						<a class="test" href="javascript:void(0)"
-						onclick="TimeRangeLink(<%= dayCount %>);">予約</a>
+						onclick="TimeRangeLink('<%= date %>');">予約</a>
 						<% }else{ %> <a
 						class="test" href="javascript:void(0)">満席</a> <% }} %>
 
 				<% }else{
 					if(reservationResult.get(dayCount-1).equals("予約")){ %>
 					<a class="test" href="javascript:void(0)"
-						onclick="TimeRangeLink(<%= dayCount %>);">予約</a>
+						onclick="TimeRangeLink('<%= date %>');">予約</a>
 						<% }else{ %> <a
 						class="test" href="javascript:void(0)">満席</a> <% }%></td>
 
