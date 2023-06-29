@@ -2,7 +2,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" session="false"%>
-
+<%
+HttpSession session = request.getSession(false);
+if(session != null && session.getAttribute("role") != null){
+ Integer role = (Integer)session.getAttribute("role");
+	if (role == 0) {
+		response.sendRedirect("AdminCalendarCon");
+	}else{
+		response.sendRedirect("UserCalendarCon");
+	}
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>

@@ -6,7 +6,7 @@
 <%@ page import="java.util.*" session="false"%>
 <% request.setCharacterEncoding("UTF-8");
 HttpSession session = request.getSession(false);
-if (session == null || session.getAttribute("userID") == null) {
+if (session == null || session.getAttribute("userID") == null || (Integer)session.getAttribute("role") != 1) {
 	response.sendRedirect("Login.jsp");
 	return;
 }
