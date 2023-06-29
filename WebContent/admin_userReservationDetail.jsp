@@ -152,10 +152,14 @@ function DeleteLink(dateTime){
 
 			</tr>
 			<tr>
-				<td>名前</td>
-				<td colspan=2>&nbsp<%= userInfo.getUserName() %>
+			<td>ID</td>
+				<td colspan=2>&nbsp<%= userInfo.getUserID() %>
 				<input type="hidden" name="userID" id="userID"
 					value="<%= userInfo.getUserID() %>"></td>
+			</tr>
+			<tr>
+				<td>名前</td>
+				<td colspan=2>&nbsp<%= userInfo.getUserName() %></td>
 			</tr>
 			<tr>
 				<td>住所</td>

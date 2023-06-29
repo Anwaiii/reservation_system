@@ -154,7 +154,7 @@ $(function(){
 
 			<tr>
 				<td style="font-weight: bold;">メール</td>
-				<td>&nbsp<input type="text" name="userEmail" size="50" value="<%= newUser.getUserEmail() %>"
+				<td>&nbsp<input type="email" name="userEmail" size="50" value="<%= newUser.getUserEmail() %>"
 					class="validate[required],[maxSize[50]]"></td>
 			</tr>
 

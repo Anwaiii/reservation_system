@@ -70,7 +70,7 @@
 
 </head>
 <body>
-	<h1></h1>
+
 	<form action="UserReservationUpdateCon" method="get"></form>
 	<form action="UserAllReservationCon" method="post">
 		<input type="hidden" name="userID" value="<%=user.getUserID()%>">
