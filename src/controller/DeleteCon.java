@@ -39,7 +39,6 @@ public class DeleteCon extends HttpServlet {
 		int num = 0;
 		num = reservationDao.cancelReservation(dateTime);
 		String date = dateTime.split(" ")[0];
-		System.out.println("test: "+date);
 
 		request.setAttribute("date", date);
 		request.setAttribute("message",num);
@@ -61,7 +60,9 @@ public class DeleteCon extends HttpServlet {
 		int num = 0;
 
 		num = reservationDao.deleteUser(userID);
-
+		if(num == 1) {
+			reservationDao.deleteReservedRecord(userID);
+		}
 		// num = 1は削除成功
 		request.setAttribute("message",num);
 		ServletContext app =this.getServletContext();

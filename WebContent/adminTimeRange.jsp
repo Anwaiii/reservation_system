@@ -93,7 +93,7 @@ function reservationDetailLink(date){
 		<span class="success">予約を変更しました。&nbsp</span>
 
 		<% }else if(message == 0){ %>
-			<span class="fail">予約変更が失敗しました。&nbsp</span>
+			<span class="fail">予約変更が失敗しました。この時間帯は既に予約されています。&nbsp</span>
 		<%
 			}else{
 		%>

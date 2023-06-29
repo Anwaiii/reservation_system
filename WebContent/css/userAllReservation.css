@@ -23,15 +23,21 @@ table {
 	width : 400px;
 }
 
-tbody td{
-
-	text-align: center;
-	width : 75px;
-	height : 40px;
+tbody {		/* scroll bar */
+text-align: center;
+ display: block;
+  overflow-y: scroll;
+  height: 250px;
 
 }
 
-.test{
-	display: block;
-	text-align : center;
+
+tbody td{
+
+width : 400px;
+height : 30px;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #fdefcc;
 }

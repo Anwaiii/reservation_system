@@ -90,7 +90,7 @@ function Logout(){
 
 	%>
 
-<h1>管理者カレンダー画面</h1>
+<h1>カレンダー(管理者)</h1>
 <form action="AdminTimeRangeCon" method="get"></form>
 <form action="NextMonthCon" method="get"><input type="hidden" name="currentYear" value="<%=currentYear%>"
 	 id="<%=currentYear%>"><input type="hidden" name="currentMonth" value="<%=currentMonth%>"></form>

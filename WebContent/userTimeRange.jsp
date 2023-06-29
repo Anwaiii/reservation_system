@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.reservationBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -100,21 +101,34 @@ function Logout(){
 
     	if(reservationResult != null && date != null){
 
-    		for(int i=10;i<=16;i++){ %>
-    			<tr>
-    			<% if(!reservationResult.contains(""+i)){
-    				%>
+    		for(int i=10;i<=16;i++){
 
-    			<td><input type="hidden" name="reservationDetail" value="<%= date+" "+i%>" id="<%=i%>">
+    		String beforeDateTime = date+" "+i;;
+			boolean flag = false;
+
+    		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH");
+    		Calendar beforeDateCalendar = Calendar.getInstance();
+    		Calendar now = Calendar.getInstance();
+    		beforeDateCalendar.setTime(formatter.parse(beforeDateTime));
+
+    		%>
+    			<tr>
+    			<td>
+
+				<% if(beforeDateCalendar.before(now)){ %>
+    			<%}else if(!reservationResult.contains(""+i)){ %>
+
+
     			<a href="javascript:void(0)" onclick="reservationConfirmLink(<%=i%>);">
-    			<%= i %>:00~<%= i+1 %>:00</a>（予約可能）</td>
+    			<%= i %>:00~<%= i+1 %>:00</a>（予約可能）<input type="hidden" name="reservationDetail"
+    			value="<%= date+" "+i%>" id="<%=i%>">
     			<% }else{ %>
-    			<td><%= i %>:00~<%= i+1 %>:00（予約済み）</td>
+    			<%= i %>:00~<%= i+1 %>:00（予約済み）</td>
 
 
     			<% } %>
     			</tr>
-    			 <% }} %>
+    			 <% }}%>
 
 
 

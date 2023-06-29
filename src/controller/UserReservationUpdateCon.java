@@ -16,15 +16,15 @@ import model.reservationBean;
 import model.reservationDao;
 
 /**
- * Servlet implementation class Admin_userReservationDetailCon
+ * Servlet implementation class UserReservationUpdateCon
  */
-public class Admin_userReservationDetailCon extends HttpServlet {
+public class UserReservationUpdateCon extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Admin_userReservationDetailCon() {
+    public UserReservationUpdateCon() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,25 +34,25 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("Admin_userReservationDetailCon:get()");
+		System.out.println("UserReservationUpdateCon:get()");
 
 		// dateDetail書式 = 'YYYY-MM-DD HH24',例:2023-06-01 11
-		String dateDetail = request.getParameter("reservationDetail");
-		if(dateDetail == null) {
-			dateDetail = (String) request.getAttribute("reservationDetail");
+		String reservationDate = request.getParameter("reservationDate");
+		if(reservationDate == null) {
+			reservationDate = (String) request.getAttribute("reservationDate");
 			request.setAttribute("message", -1);
 		}
 
 		reservationDao reservationDao = new reservationDao();
 		reservationBean userInfo = new reservationBean();
 
-		String[] dateAndTime = dateDetail.split(" ");
-		userInfo = reservationDao.printReservationInfo(dateDetail);
+		String[] dateAndTime = reservationDate.split(" ");
+		userInfo = reservationDao.printReservationInfo(reservationDate);
 
 		request.setAttribute("userInfo", userInfo);
 		request.setAttribute("dateAndTime", dateAndTime);
 		ServletContext app =this.getServletContext();
-		RequestDispatcher dispatcher =  app.getRequestDispatcher("/admin_userReservationDetail.jsp");
+		RequestDispatcher dispatcher =  app.getRequestDispatcher("/userReservationUpdate.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -61,8 +61,9 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("Admin_userReservationDetailCon:post()");
+		System.out.println("UserReservationUpdateCon:post()");
 
+		String userID = request.getParameter("userID");
 		reservationDao reservationDao = new reservationDao();
 		int num = 0;
 		// date = YYYY/MM/DD HH24
@@ -70,8 +71,6 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 		String date = request.getParameter("date");
 		String newTimeRange = request.getParameter("timeRange");
 		String afterDateTime = date + " " + newTimeRange;
-		System.out.println("before:"+beforeDateTime);
-		System.out.println("new:"+afterDateTime);
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH");
 		Calendar afterDateCalendar = Calendar.getInstance();
@@ -87,17 +86,19 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 			 num = reservationDao.updateReservation(afterDateTime, beforeDateTime);
 			if(num == 1) {
 				num = 2;   // 更新成功、1は既に使われているので、2に変える
+			}else {
+				num = -1; // 更新失敗
 			}
 		}else {
-			request.setAttribute("reservationDetail", beforeDateTime);
+			request.setAttribute("reservationDate", beforeDateTime);
 			doGet(request, response);
 		}
 
-
-		request.setAttribute("date", beforeDateTime.split(" ")[0]);
+		System.out.println("UserReservationUpdateCon-num:"+num);
+		request.setAttribute("userID", userID);
 		request.setAttribute("message", num);
 		ServletContext app =this.getServletContext();
-		RequestDispatcher dispatcher =  app.getRequestDispatcher("/AdminTimeRangeCon");
+		RequestDispatcher dispatcher =  app.getRequestDispatcher("/UserAllReservationCon");
 		dispatcher.forward(request, response);
 	}
 

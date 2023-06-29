@@ -305,6 +305,44 @@ public class reservationDao {
 		return num;
 	}
 
+	public void deleteReservedRecord(String userID) {
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql = "delete from time_table where user_id = ? ";
+
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, userID);
+			stmt.executeUpdate();
+
+			stmt.close();
+
+			conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
 	public ArrayList<String> printUserCalendar(int currentYear,int currentMonth,int maxDay) {
 
 		ResultSet rs=null;

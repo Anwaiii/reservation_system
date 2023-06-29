@@ -159,4 +159,14 @@
     <servlet-name>LastMonthCon</servlet-name>
     <url-pattern>/LastMonthCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserReservationUpdateCon</display-name>
+    <servlet-name>UserReservationUpdateCon</servlet-name>
+    <servlet-class>controller.UserReservationUpdateCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserReservationUpdateCon</servlet-name>
+    <url-pattern>/UserReservationUpdateCon</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -5,7 +5,7 @@
 <%@ page import="java.util.*" session="false"%>
 <% request.setCharacterEncoding("UTF-8");
 HttpSession session = request.getSession(false);
-if (session == null || session.getAttribute("userID") == null ||  (Integer)session.getAttribute("role") != 0) {
+if (session == null || session.getAttribute("userID") == null) {
 	response.sendRedirect("Login.jsp");
 	return;
 }
@@ -18,7 +18,7 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 <head>
 <link rel="stylesheet" type="text/css"
 	href="css/mouseHoverDropDownDesign.css">
-<link rel="stylesheet" type="text/css" href="css/admin_userReservationDetail.css">
+<link rel="stylesheet" type="text/css" href="css/userReservationConfirm.css">
 <link rel="stylesheet" type="text/css"
 	href="css/validationEngine.jquery.css">
 
@@ -34,29 +34,15 @@ if (session == null || session.getAttribute("userID") == null ||  (Integer)sessi
 	});
 </script>
 <script type="text/javascript">
-function TimeRangeLink(date){
+function allReservationLink(){
 
 		var form = document.forms[0];
-		var input = document.getElementById(date);
+		var input = document.getElementById("userAllReservationFormID");
 		form.appendChild(input);
 		document.body.appendChild(form);
 		form.submit();
 
 		}
-</script>
-
-<script type="text/javascript">
-function DeleteLink(dateTime){
-	if(window.confirm("この予約を削除しますか？")){
-		var form = document.forms[1];
-		var input = document.getElementById(dateTime);
-		form.appendChild(input);
-		document.body.appendChild(form);
-		form.submit();
-}else{
-	return false;
-}
-	}
 </script>
 
 <script type="text/javascript">
@@ -72,9 +58,9 @@ function DeleteLink(dateTime){
 
 </head>
 <body>
-<form action="AdminTimeRangeCon" method="get"></form>
-<form method="get" action="DeleteCon"></form>
-	<h1>ユーザー予約詳細(管理者)</h1>
+<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
+		value="<%= user.getUserID() %>"></form>
+
 		<%
 				reservationBean userInfo = (reservationBean) request.getAttribute("userInfo");
 				String[] dateAndTime = (String[]) request.getAttribute("dateAndTime");
@@ -87,9 +73,7 @@ function DeleteLink(dateTime){
 		<li><a>Hello,<%= user.getUserName() %>さん</a>
 
 			<ul class="dropdown">
-				<li><a href="AdminCalendarCon">カレンダー</a></li>
-				<li><a href="adminCreateUser.jsp">ユーザー追加画面</a></li>
-				<li><a href="adminUpdateUser.jsp">ユーザー更新画面</a></li>
+				<li><a href="UserCalendarCon">カレンダー</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>
@@ -109,12 +93,12 @@ function DeleteLink(dateTime){
 	</div>
 
 <div class="href">
-	<a href="javascript:void(0)" onclick="TimeRangeLink('<%=date %>')">＜時間帯画面</a>
+	<a href="javascript:void(0)" onclick="allReservationLink()">＜全予約状況</a>
 	<a></a>
 </div>
 
 	<br><br>
-<form action="Admin_userReservationDetailCon" method="post" id="admin_userReservationDetail_formID"
+<form action="UserReservationUpdateCon" method="post" id="admin_userReservationDetail_formID"
 		onsubmit="return confirm('予約変更を確定しますか?');">
 
 	<table border="1">
@@ -147,9 +131,6 @@ function DeleteLink(dateTime){
 							<% } %>
 							</select></p>
 				</td>
-
-
-
 			</tr>
 			<tr>
 				<td>名前</td>
@@ -178,8 +159,6 @@ function DeleteLink(dateTime){
 
 		<%-- 例:update time_table set booking_time = '2023-06-30 10' where booking_time = '2023-06-01 10' --%>
 		<input type="submit" value="予約変更" class="button" id="alterButton">&nbsp&nbsp&nbsp&nbsp
-		<input type="button" value="予約削除" class="button" id="deleteButton"
-		 onclick="DeleteLink('<%= dateTime %>');">
 		</div>
 	</form>
 

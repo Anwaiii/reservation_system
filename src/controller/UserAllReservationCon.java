@@ -56,7 +56,21 @@ public class UserAllReservationCon extends HttpServlet {
 		String userID = request.getParameter("userID");
 		String date = request.getParameter("reservationDate");
 		ArrayList<String> allReservation = new ArrayList<>();
+
+		System.out.println(userID);
 		System.out.println(date);
+		if(date == null) {
+			request.setAttribute("message", (Integer) request.getAttribute("message"));
+			allReservation = reservationDao.printUserAllReservation(userID);
+			request.setAttribute("reservationResult", allReservation);
+			ServletContext app =this.getServletContext();
+			RequestDispatcher dispatcher =  app.getRequestDispatcher("/userAllReservation.jsp");
+			dispatcher.forward(request, response);
+		}
+
+
+
+
 
 		int num = reservationDao.cancelReservation(date);
 
@@ -64,14 +78,14 @@ public class UserAllReservationCon extends HttpServlet {
 			request.setAttribute("message", num);
 			doGet(request, response);
 		}else {
-
 			allReservation = reservationDao.printUserAllReservation(userID);
-			request.setAttribute("message", 0);
+			request.setAttribute("message", num);
 			request.setAttribute("reservationResult", allReservation);
 			ServletContext app =this.getServletContext();
 			RequestDispatcher dispatcher =  app.getRequestDispatcher("/userAllReservation.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
+
 
 }
