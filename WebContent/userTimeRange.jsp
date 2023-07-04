@@ -116,6 +116,7 @@ function Logout(){
     			<td>
 
 				<% if(beforeDateCalendar.before(now)){ %>
+				<%= i %>:00~<%= i+1 %>:00
     			<%}else if(!reservationResult.contains(""+i)){ %>
 
 
