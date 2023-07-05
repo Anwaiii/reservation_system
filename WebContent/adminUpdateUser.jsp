@@ -61,7 +61,7 @@ function DeleteLink(userID){
 <body>
 <form method="post" action="DeleteCon"></form>
 
-	<h1>ユーザ更新(管理者)</h1>
+	<h1>ユーザー更新(管理者)</h1>
 
 	<ul>
 		<li><a>Hello,<%= user.getUserName() %>さん </a>
