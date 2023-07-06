@@ -644,9 +644,12 @@ public class reservationDao {
 
 
 				// TO_CHAR関数を使うことで、明示的にbooking_timeを日付型から文字列に変換するので、LIKEが使える。
-				String sql ="select * from user_table where user_id = "
-						+ "(select user_id from time_table where to_char(booking_time, 'YYYY-MM-DD HH24') "
-						+ "like ?)";
+//				String sql ="select * from user_table where user_id = "
+//						+ "(select user_id from time_table where to_char(booking_time, 'YYYY-MM-DD HH24') "
+//						+ "like ?)";
+
+				String sql="select * from user_table u join time_table t on u.user_id = t.user_id  "
+						+ "where to_char(booking_time, 'YYYY-MM-DD HH24') like ?";
 
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, date+"%");
@@ -659,6 +662,7 @@ public class reservationDao {
 					userInfo.setUserAddress(rs.getString("user_address"));
 					userInfo.setUserPhoneNumber(rs.getString("user_phonenumber"));
 					userInfo.setUserEmail(rs.getString("user_email"));
+					userInfo.setBookingNO(rs.getInt("booking_no"));
 				}
 
 				rs.close();

@@ -62,6 +62,7 @@ public class LoginCon extends HttpServlet {
 			session.setAttribute("user", user);
 			session.setAttribute("userID", userID);
 			session.setAttribute("role", user.getRole());
+			session.setAttribute("email", user.getUserEmail());
 
 			if(user.getRole() == 0) {
 				//	roleが0の場合は管理者
