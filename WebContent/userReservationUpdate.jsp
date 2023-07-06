@@ -113,7 +113,10 @@ function allReservationLink(){
 		</thead>
 
 		<tbody>
-
+			<tr>
+			<td>予約番号</td>
+			<td colspan="2">&nbsp#<%= userInfo.getBookingNO() %></td>
+			</tr>
 			<tr>
 				<td>日付</td>
 				<td colspan="2">&nbsp<input type="date" value="<%= date%>" name="date"><input type="hidden"
