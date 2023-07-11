@@ -67,7 +67,8 @@ public class UserReservationUpdateCon extends HttpServlet {
 		String userID = request.getParameter("userID");
 		reservationDao reservationDao = new reservationDao();
 		int num = 0;
-		// date = YYYY/MM/DD HH24
+		int diff = 0;
+
 		String beforeDateTime = request.getParameter("beforeDateTime");
 		String date = request.getParameter("date");
 		String newTimeRange = request.getParameter("timeRange");
@@ -76,14 +77,20 @@ public class UserReservationUpdateCon extends HttpServlet {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH");
 		Calendar afterDateCalendar = Calendar.getInstance();
 		Calendar now = Calendar.getInstance();
+
+		Calendar is90days = Calendar.getInstance();
+		is90days.add(Calendar.DATE,120);
+
+
 		try {
 			afterDateCalendar.setTime(formatter.parse(afterDateTime));
+			 diff = afterDateCalendar.compareTo(is90days);
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
-		if(afterDateCalendar.after(now)) {
+		if(afterDateCalendar.after(now) && diff <= 0 ) {
 			 num = reservationDao.updateReservation(afterDateTime, beforeDateTime);
 			if(num == 1) {
 				num = 2;   // 更新成功、1は既に使われているので、2に変える
@@ -104,13 +111,6 @@ public class UserReservationUpdateCon extends HttpServlet {
 
 				SendEmailUsingGMailSMTP mailSMTP = new SendEmailUsingGMailSMTP();
 				mailSMTP.sendEmail("ご予約が変更いたしました", message,userEmail,userName);
-
-
-
-
-
-
-
 			}else {
 				num = -1; // 更新失敗
 			}

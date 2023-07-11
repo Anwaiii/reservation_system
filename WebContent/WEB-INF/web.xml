@@ -169,4 +169,24 @@
     <servlet-name>UserReservationUpdateCon</servlet-name>
     <url-pattern>/UserReservationUpdateCon</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserPersonalPageCon</display-name>
+    <servlet-name>UserPersonalPageCon</servlet-name>
+    <servlet-class>controller.UserPersonalPageCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserPersonalPageCon</servlet-name>
+    <url-pattern>/UserPersonalPageCon</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserPasswordChangeCon</display-name>
+    <servlet-name>UserPasswordChangeCon</servlet-name>
+    <servlet-class>controller.UserPasswordChangeCon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserPasswordChangeCon</servlet-name>
+    <url-pattern>/UserPasswordChangeCon</url-pattern>
+  </servlet-mapping>
 </web-app>

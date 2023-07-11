@@ -163,6 +163,65 @@ public class reservationDao {
 		return null;
 	}
 
+	public int changePassword(String userID,String password,String newPassword) {
+
+		reservationBean reservationBean = new reservationBean();
+		ResultSet rs=null;
+		String userID_result = "";
+		String userPassword_result = "";
+		int num=0;
+
+		try {
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql ="select user_password from user_table where user_id = ? ";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userID);
+			rs=stmt.executeQuery();
+
+			rs.next();
+
+				userPassword_result = rs.getString("user_password");
+				if(!userPassword_result.equals(password)) {
+					return -2;
+				}else {
+					sql ="update user_table set user_password = ? where user_id = ? ";
+
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, newPassword);
+					stmt.setString(2, userID);
+					num = stmt.executeUpdate();
+
+				}
+
+				stmt.close();
+				rs.close();
+				conn.commit();
+
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return num;
+	}
+
 	public reservationBean getUserInfo(String userID) {
 		reservationBean userInfo = new reservationBean();
 		ResultSet rs=null;

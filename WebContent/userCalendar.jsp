@@ -87,6 +87,7 @@ function Logout(){
 
 </head>
 <body>
+<div class='header'>予約可能数No.1</div>
 	<% Calendar calendar = Calendar.getInstance();	 //今のカレンダーを取得
 
 
@@ -114,6 +115,7 @@ function Logout(){
 		</a>
 
 			<ul class="dropdown">
+				<li><a href="userPersonalPage.jsp" onclick="">個人ページ</a></li>
 				<li><a href="javascript:void(0)" onclick="allReservation();">全予約状況</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
@@ -165,9 +167,9 @@ function Logout(){
     	// currentMonthは0からはじまり、表示の際には+1が必要
     	String month = String.format("%02d", currentMonth+1);
     	 String date="";
-    	 calendar = Calendar.getInstance();
 
-    	 calendar.add(Calendar.DATE,90);
+    	 calendar = Calendar.getInstance();
+    	 calendar.add(Calendar.DATE,60);
     	 Calendar newDay = Calendar.getInstance();
     	 newDay.set(currentYear, currentMonth,1);
 		 int diff = calendar.compareTo(newDay);
@@ -227,6 +229,11 @@ function Logout(){
 				<br> <% }else if(colWeek == 7){ %> <b style="color: blue"><%= dayCount %></b><br>
 				<br> <% }else{ %> <b><%= dayCount %></b><br>
 				<br> <% } %> <%
+
+				/*当月の予約/満席の出力。例えば7/12の場合は7/12以降の日のみ予約/満席が出力される。
+				  dayCountは一日から日を数えている。ddは当日の日を表している。例えば7/12の場合は
+				  ddは12でdayCountは12日になるまでに予約/満席が出力されない。
+				*/
 				 if(currentYear == yyyy && currentMonth+1 == MM){
 					if(dayCount >= dd){
 					 	if(reservationResult.get(dayCount-1).equals("予約")){ %>
@@ -236,6 +243,7 @@ function Logout(){
 						class="test" href="javascript:void(0)">満席</a> <% }} %>
 
 				<% }else{
+					// 来月以降の予約/満席の出力。
 					if(reservationResult.get(dayCount-1).equals("予約")){ %>
 					<a class="test" href="javascript:void(0)"
 						onclick="TimeRangeLink('<%= date %>');">予約</a>

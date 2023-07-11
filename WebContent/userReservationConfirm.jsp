@@ -88,6 +88,7 @@ function allReservation(){
 		<li><a>Hello,<%= user.getUserName() %>さん </a>
 
 			<ul class="dropdown">
+				<li><a href="userPersonalPage.jsp" onclick="">個人ページ</a></li>
 				<li><a href="UserCalendarCon">カレンダー</a></li>
 				<li><a href="javascript:void(0)" onclick="allReservation();">全予約状況</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>

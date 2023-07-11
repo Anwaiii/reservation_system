@@ -83,6 +83,7 @@
 
 
 			<ul class="dropdown">
+				<li><a href="userPersonalPage.jsp" onclick="">個人ページ</a></li>
 				<li><a href="UserCalendarCon">カレンダー画面</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
@@ -114,7 +115,11 @@
 	<br>
 
 	<table border="1">
-		<caption style="font-size: 20px;">---全予約状況---</caption>
+		<caption style="font-size: 20px;">---------------全予約状況---------------</caption>
+		<thead>
+
+
+		</thead>
 		<tbody>
 			<%
 				// 書式:yyyy-MM-dd HH24

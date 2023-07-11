@@ -1,15 +1,14 @@
 @charset "UTF-8";
 
-h1 {
-	text-align: center;
+.header {
+	font-weight : 900;
 	color: #ff0080;
-	box-shadow: black;
+	box-shadow: #ff0080;
 	border-style: solid;
-	border-color:  #ff0080 #ffffff #ff0080 #ffffff;
+	border-color:  #f9ceb3 #f9ceb3 #f9ceb3 #f9ceb3;
 	background-color:  #f9ceb3 ;
-	margin: 30px;
 	padding: 20px;
-	box-shadow: 0 20px 10px -20px inset, 0 -20px 10px -20px  inset;
+
 }
 
 table {

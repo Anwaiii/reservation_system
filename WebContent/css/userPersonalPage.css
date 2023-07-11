@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+html,body{
+	height:100%;
+	padding: 0;
+    margin: 0;
+}
+table {
+	border-style: solid;
+	border-inline: solid #bdaa20;   /* 左と右の線 */
+	border-block-color : #bdaa20;	/* 上と下の線 */
+	border-collapse: collapse;
+	border-width:3px 3px;      /*  四辺が同じ太さにする */
+	margin: auto;
+	width : 600px;
+}
+
+
+tbody td{
+
+width : 600px;
+height : 30px;
+}
+
+ul {
+	font-weight: bold;
+	color: #000000;
+	border-style: solid;
+	border-color:  #ffffff #ffffff #ffffff #ffffff;
+	background-color:  #ececec ;
+	padding: 30px;
+	height:20px;
+
+}
+
+
+ul li {
+	vertical-align:top;
+	display: inline-block;
+	position: relative;
+	line-height: 21px;
+	text-align: left;
+}
+
+ul li a {
+	display: block;
+	padding: 8px 25px;
+	text-decoration: none;
+}
+
+ul li a:hover {
+
+}
+
+ul li ul.dropdown {
+	min-width: 200px; /* Set width of the dropdown */
+	background: #fbfbfb;
+	display: none;
+	position: absolute;
+	z-index: 999;
+	 padding: 12px 6px;
+
+}
+
+ul li:hover ul.dropdown {
+	display: block; /* Display the dropdown */
+
+}
+
+ul li ul.dropdown li {
+	display: block;
+}
+
+.href {
+
+	width:100%
+	padding-top: 30px;
+	display: flex;
+	justify-content: space-evenly;
+
+}
+
+.buttonall .button{
+	text-align:center;
+	width: 100px;
+	height: 30px;
+	background-color: #ececec;
+	color: #000000;
+	font-weight: bold;
+	font-size : 15px;
+}
+
+div.buttonall {
+	text-align: center;
+}
+
+.message {
+  text-align: center;
+}
+
+.message .success{               /* 登録できた時のメッセージをデザインする */
+	text-align: center;
+	color : #0000ff;
+}
+
+.message .fail{		 /* 登録できなかった時のメッセージをデザインする */
+	text-align: center;
+	color : #ff0080;
+}
+
+
