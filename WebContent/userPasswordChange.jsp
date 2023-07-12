@@ -113,13 +113,13 @@ function allReservation(){
 			<tr>
 				<td style="font-weight: bold;">新しいパスワード</td>
 				<td>&nbsp<input type="password"	name="newPassword" size="30"
-					class="validate[required],[maxSize[16]]"></td>
+					class="validate[required],[minSize[6],][maxSize[16]]"></td>
 			</tr>
 
 			<tr>
 				<td style="font-weight: bold;">新しいパスワード（再確認）</td>
 				<td>&nbsp<input type="password" name="newPasswordConfirm" size="30"
-					class="validate[required],[maxSize[16]]"></td>
+					class="validate[required],[minSize[6],][maxSize[16]]"></td>
 			</tr>
 
 		</tbody>

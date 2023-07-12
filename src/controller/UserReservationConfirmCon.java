@@ -53,9 +53,16 @@ public class UserReservationConfirmCon extends HttpServlet {
 		reservationDao reservationDao = new reservationDao();
 		String dateAndTime = request.getParameter("date")+" "+request.getParameter("time");
 		String userID = request.getParameter("userID");
+		int num = 0;
 
 
-		int num = reservationDao.reserve(dateAndTime,userID);
+		if(reservationDao.getUserInfo(userID) == null) {
+			request.getSession().invalidate();
+			response.sendRedirect("Login.jsp");
+			return;
+		}else {
+			num = reservationDao.reserve(dateAndTime,userID);
+
 
 		reservationBean user = reservationDao.printReservationInfo(dateAndTime);
 		String userEmail = user.getUserEmail();
@@ -73,13 +80,14 @@ public class UserReservationConfirmCon extends HttpServlet {
 
 		SendEmailUsingGMailSMTP mailSMTP = new SendEmailUsingGMailSMTP();
 		mailSMTP.sendEmail("ご予約が確定いたしました", message,userEmail,userName);
-
+		}
 
 		request.setAttribute("message", num);
 
 		ServletContext app =this.getServletContext();
 		RequestDispatcher dispatcher =  app.getRequestDispatcher("/UserCalendarCon");
 		dispatcher.forward(request, response);
+
 	}
 
 }

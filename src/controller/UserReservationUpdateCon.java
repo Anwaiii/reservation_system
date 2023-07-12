@@ -64,8 +64,15 @@ public class UserReservationUpdateCon extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		System.out.println("UserReservationUpdateCon:post()");
 
+
 		String userID = request.getParameter("userID");
+
 		reservationDao reservationDao = new reservationDao();
+		if(reservationDao.getUserInfo(userID) == null) {
+			request.getSession().invalidate();
+			response.sendRedirect("Login.jsp");
+			return;
+		}
 		int num = 0;
 		int diff = 0;
 

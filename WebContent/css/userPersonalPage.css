@@ -5,10 +5,8 @@ html,body{
 	padding: 0;
     margin: 0;
 }
-table {
-	border-style: solid;
-	border-inline: solid #bdaa20;   /* 左と右の線 */
-	border-block-color : #bdaa20;	/* 上と下の線 */
+table  {
+	border-style: groove;
 	border-collapse: collapse;
 	border-width:3px 3px;      /*  四辺が同じ太さにする */
 	margin: auto;

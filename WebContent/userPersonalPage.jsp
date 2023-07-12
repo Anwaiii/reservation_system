@@ -97,7 +97,7 @@ function allReservation(){
 	<br>
 <form action="UserPersonalPageCon" method="post" id="userPersonalPageConFormID">
 
-<table border="1">
+<table>
 
 <tbody>
 			<tr>
