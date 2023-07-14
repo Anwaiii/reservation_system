@@ -76,6 +76,12 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH");
 		Calendar afterDateCalendar = Calendar.getInstance();
 		Calendar now = Calendar.getInstance();
+
+		if(reservationDao.checkdateTimeIfExisted(beforeDateTime) == -99) {
+			num = -99;
+		}else {
+
+
 		try {
 			afterDateCalendar.setTime(formatter.parse(afterDateTime));
 		} catch (ParseException e) {
@@ -91,6 +97,7 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 		}else {
 			request.setAttribute("reservationDetail", beforeDateTime);
 			doGet(request, response);
+			}
 		}
 
 
@@ -99,6 +106,7 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 		ServletContext app =this.getServletContext();
 		RequestDispatcher dispatcher =  app.getRequestDispatcher("/AdminTimeRangeCon");
 		dispatcher.forward(request, response);
+
 	}
 
 }

@@ -222,6 +222,50 @@ public class reservationDao {
 		return num;
 	}
 
+	public int checkdateTimeIfExisted(String beforeDateTime) {
+
+		ResultSet rs=null;
+		int num = 0;
+		try {
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","anson","123456");
+			conn.setAutoCommit(false);
+
+			String sql ="select booking_time from time_table where TO_CHAR(booking_time, 'YYYY-MM-DD HH24') LIKE ? ";
+
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, beforeDateTime);
+
+			rs=stmt.executeQuery();
+
+
+			if(!rs.next()) return -99;
+
+
+			rs.close();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+
+				if(conn != null) {
+					conn.rollback();
+					conn.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return num;
+	}
+
+
 	public reservationBean getUserInfo(String userID) {
 		reservationBean userInfo = new reservationBean();
 		ResultSet rs=null;

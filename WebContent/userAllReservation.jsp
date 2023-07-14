@@ -105,9 +105,9 @@
 		%>
 		<span class="success">予約を変更しました。&nbsp</span>
 		<% }else if(message == -1){ %>
-		<span class="fail">予約変更が失敗しました。この時間帯は既に予約されています。&nbsp</span>
+		<span class="fail">この時間帯は既に予約されています。&nbsp</span>
 		<%}else{ %>
-		<span class="fail">取消が失敗しました。&nbsp</span>
+		<span class="fail">予約変更が失敗しました。&nbsp</span>
 		<% }} %>
 
 	</div>

@@ -54,7 +54,7 @@ function allReservationLink(){
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>予約システム 管理者_ユーザー予約詳細画面</title>
+<title>予約システム 予約変更画面</title>
 
 </head>
 <body>
