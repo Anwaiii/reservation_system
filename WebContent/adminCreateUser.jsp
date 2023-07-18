@@ -61,7 +61,7 @@ $(function(){
 		</a>
 
 			<ul class="dropdown">
-				<li><a href="adminUpdateUser.jsp">ユーザー更新画面</a></li>
+				<li><a href="adminUpdateUser.jsp">ユーザー更新</a></li>
 				<li><a href="AdminCalendarCon">カレンダー</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
