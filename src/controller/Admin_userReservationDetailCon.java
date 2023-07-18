@@ -65,6 +65,8 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 
 		reservationDao reservationDao = new reservationDao();
 		int num = 0;
+		int diff = 0;
+
 		// date = YYYY/MM/DD HH24
 		String beforeDateTime = request.getParameter("beforeDateTime");
 		String date = request.getParameter("date");
@@ -76,6 +78,13 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH");
 		Calendar afterDateCalendar = Calendar.getInstance();
 		Calendar now = Calendar.getInstance();
+		Calendar is3Months = Calendar.getInstance();
+		is3Months.add(Calendar.DATE,60);
+
+		is3Months.set(is3Months.get(Calendar.YEAR), is3Months.get(Calendar.MONTH)+1,1,23,59,59);
+		is3Months.add(Calendar.DATE,-1);
+
+
 
 		if(reservationDao.checkdateTimeIfExisted(beforeDateTime) == -99) {
 			num = -99;
@@ -84,12 +93,13 @@ public class Admin_userReservationDetailCon extends HttpServlet {
 
 		try {
 			afterDateCalendar.setTime(formatter.parse(afterDateTime));
+			diff = afterDateCalendar.compareTo(is3Months);
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
-		if(afterDateCalendar.after(now)) {
+		if(afterDateCalendar.after(now) && diff <= 0) {
 			 num = reservationDao.updateReservation(afterDateTime, beforeDateTime);
 			if(num == 1) {
 				num = 2;   // 更新成功、1は既に使われているので、2に変える

@@ -92,9 +92,6 @@ public class UserReservationUpdateCon extends HttpServlet {
 		is3Months.set(is3Months.get(Calendar.YEAR), is3Months.get(Calendar.MONTH)+1,1,23,59,59);
 		is3Months.add(Calendar.DATE,-1);
 
-		diff = afterDateCalendar.compareTo(is3Months);
-
-
 		if(reservationDao.checkdateTimeIfExisted(beforeDateTime) == -99) {
 			num = -99;
 		}else {

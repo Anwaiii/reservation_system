@@ -171,7 +171,7 @@ function Logout(){
     	 calendar = Calendar.getInstance();
     	 calendar.add(Calendar.DATE,60);
 
-    	 calendar.set(currentYear, calendar.get(Calendar.MONTH)+1,1);
+    	 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1,1);
     	 calendar.add(Calendar.DATE,-1);
 
     	 Calendar newDay = Calendar.getInstance();
