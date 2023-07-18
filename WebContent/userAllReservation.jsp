@@ -84,7 +84,7 @@
 
 			<ul class="dropdown">
 				<li><a href="userPersonalPage.jsp" onclick="">個人ページ</a></li>
-				<li><a href="UserCalendarCon">カレンダー画面</a></li>
+				<li><a href="UserCalendarCon">カレンダー</a></li>
 				<li><a href="javascript:void(0)" onclick="Logout();">ログアウト</a></li>
 			</ul></li>
 	</ul>

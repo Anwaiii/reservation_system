@@ -86,8 +86,13 @@ public class UserReservationUpdateCon extends HttpServlet {
 		Calendar afterDateCalendar = Calendar.getInstance();
 		Calendar now = Calendar.getInstance();
 
-		Calendar is90days = Calendar.getInstance();
-		is90days.add(Calendar.DATE,120);
+		Calendar is3Months = Calendar.getInstance();
+		is3Months.add(Calendar.DATE,60);
+
+		is3Months.set(is3Months.get(Calendar.YEAR), is3Months.get(Calendar.MONTH)+1,1,23,59,59);
+		is3Months.add(Calendar.DATE,-1);
+
+		diff = afterDateCalendar.compareTo(is3Months);
 
 
 		if(reservationDao.checkdateTimeIfExisted(beforeDateTime) == -99) {
@@ -96,7 +101,7 @@ public class UserReservationUpdateCon extends HttpServlet {
 
 			try {
 				afterDateCalendar.setTime(formatter.parse(afterDateTime));
-				diff = afterDateCalendar.compareTo(is90days);
+				diff = afterDateCalendar.compareTo(is3Months);
 			} catch (ParseException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

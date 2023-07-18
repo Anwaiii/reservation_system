@@ -136,9 +136,14 @@ function Logout(){
     	 String date="";
     	 calendar = Calendar.getInstance();
 
-    	 calendar.add(Calendar.DATE,90);
+    	 calendar.add(Calendar.DATE,60);
+
+    	 calendar.set(currentYear, calendar.get(Calendar.MONTH)+1,1);
+    	 calendar.add(Calendar.DATE,-1);
+    	 System.out.println(calendar.get(Calendar.MONTH)+" "+calendar.get(Calendar.DATE));
     	 Calendar newDay = Calendar.getInstance();
-    	 newDay.set(currentYear, currentMonth,1);
+    	 newDay.set(currentYear, currentMonth+1,1);
+    	// newDay.set(currentYear, currentMonth,1);
 		 int diff = calendar.compareTo(newDay);
 
     %>

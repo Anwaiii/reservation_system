@@ -170,8 +170,13 @@ function Logout(){
 
     	 calendar = Calendar.getInstance();
     	 calendar.add(Calendar.DATE,60);
+
+    	 calendar.set(currentYear, calendar.get(Calendar.MONTH)+1,1);
+    	 calendar.add(Calendar.DATE,-1);
+
     	 Calendar newDay = Calendar.getInstance();
-    	 newDay.set(currentYear, currentMonth,1);
+    	 newDay.set(currentYear, currentMonth+1,1);
+
 		 int diff = calendar.compareTo(newDay);
 
     %>
@@ -207,8 +212,6 @@ function Logout(){
 
 		<% ArrayList<String> reservationResult = (ArrayList) request.getAttribute("reservationResult");
     	if(reservationResult != null){ %>
-
-
 
 		<tbody>
 			<%

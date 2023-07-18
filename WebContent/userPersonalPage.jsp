@@ -102,7 +102,7 @@ function allReservation(){
 <tbody>
 			<tr>
 				<td style="font-weight: bold;">ユーザーID</td>
-				<td>&nbsp<input type="text" name="userID" id="<%= user.getUserID()%>"
+				<td>&nbsp<input type="text" name="userID" size="30 id="<%= user.getUserID()%>"
 				value ="<%= user.getUserID()%>" readonly></td>
 			</tr>
 
