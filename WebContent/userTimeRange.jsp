@@ -70,14 +70,15 @@ function Logout(){
 
 </head>
 <body>
-<h1> 予約状況 </h1>
+<%
+		String date = (String) request.getAttribute("date");
+	 	%>
+<h1> <%=date %> </h1>
 <form action="UserReservationConfirmCon" method="get"></form>
 <form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
 		value="<%= user.getUserID() %>"></form>
 <ul>
-		<%
-		String date = (String) request.getAttribute("date");
-	 	%>
+
 			<li><a>Hello,<%= user.getUserName() %>さん
 		</a>
 
@@ -93,7 +94,7 @@ function Logout(){
 
 	 <table border="1">
 	 <caption>
-		<%=date %>の時間帯を選んでください
+	時間帯を選んでください
 	 </caption>
 
 

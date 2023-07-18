@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
 h1 {
-	text-align: center;
-	color: #ff0080;
+
+	color: #cc0066;
 	box-shadow: black;
 	border-style: solid;
-	border-color:  #ff0080 #ffffff #ff0080 #ffffff;
+	border-color:  #cc0066 #ffffff #cc0066 #ffffff;
 	background-color:  #f9ceb3 ;
 	margin: 30px;
 	padding: 20px;

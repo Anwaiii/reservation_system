@@ -79,7 +79,7 @@ function allReservation(){
 </head>
 <body>
 <form action="UserTimeRangeCon" method="get"></form>
-	<h1>予約確定</h1>
+	<h1>予約詳細</h1>
 	<form action="UserAllReservationCon" method="get"><input type="hidden" name="userID" id="userAllReservationFormID"
 		value="<%= user.getUserID() %>"></form>
 
